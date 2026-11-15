@@ -1,0 +1,6 @@
+System_ID,System_Name,GT_Targets,Model_Detections,TP,FN,FP,Recall_%,Precision_%,F1_Score,Privacy_Leak_Rate_%,Overblur_Rate_%
+1_FAST_V5,Proposed FAST v5,56,53,18,38,35,32.14,33.96,33.03,67.86,66.04
+2_EgoBlur,Meta AI EgoBlur,56,11,10,46,1,17.86,90.91,29.85,82.14,9.09
+3_DashcamCleaner,DashcamCleaner,56,45,23,33,22,41.07,51.11,45.54,58.93,48.89
+4_FusionPortable,FusionPortable,56,112,41,15,71,73.21,36.61,48.81,26.79,63.39
+5_Generative_Anonymizer,Generative Inpaint,56,16,7,49,9,12.5,43.75,19.44,87.5,56.25

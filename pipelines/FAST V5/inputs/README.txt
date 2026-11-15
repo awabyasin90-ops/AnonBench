@@ -1,0 +1,1 @@
+Place raw camera frames here (.jpg, .png, etc.)\n

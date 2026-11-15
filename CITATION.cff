@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this benchmark suite, customized X-AnyLabeling oracle, or statistical evaluator, please cite our study."
+title: "Empirical Benchmarking of Anonymization Failure Patterns in Real and Simulated Autonomous Driving Data"
+type: software
+authors:
+  - family-names: "Yasin"
+    given-names: "Awab"
+    affiliation: "Istanbul Okan University ""
+    "
+    
+version: 1.0.0
+date-released: 2026-11-16
+license: MIT
+keywords:
+  - autonomous-driving
+  - privacy-anonymization
+  - failure-analysis
+  - edge-telemetry
+  - x-anylabeling
+  - computer-vision-benchmark
+

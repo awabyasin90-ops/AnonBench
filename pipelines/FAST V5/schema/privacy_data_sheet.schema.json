@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PrivacyDataSheetV2",
+  "description": "Schema for FAST v4.0.0 Standardized Privacy Data Sheet (Schema Version 2.0)",
+  "type": "object",
+  "required": [
+    "document_type",
+    "schema_version",
+    "standard",
+    "dataset_version",
+    "anonymization_version",
+    "generated_at",
+    "overall_status",
+    "release_status",
+    "status_reasons",
+    "scope",
+    "detection_summary",
+    "masking",
+    "blur_specification",
+    "measured_performance_on_validation_set",
+    "session_audit",
+    "metadata_sanitization",
+    "pixel_integrity_test",
+    "provenance",
+    "design_targets",
+    "known_limitations",
+    "not_claimed",
+    "legal_notice",
+    "integrity"
+  ],
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "const": "PRIVACY_DATA_SHEET"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "2.0"
+    },
+    "standard": {
+      "type": "string"
+    },
+    "dataset_version": {
+      "type": "string"
+    },
+    "anonymization_version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": ["PASS", "PASS_WITH_LIMITATIONS", "FAIL", "NOT_EXECUTED"]
+    },
+    "release_status": {
+      "type": "string",
+      "enum": ["RELEASE_ALLOWED", "RELEASE_BLOCKED"]
+    },
+    "status_reasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["sessions", "cameras", "frames_total", "frame_resolutions"],
+      "properties": {
+        "sessions": { "type": "array", "items": { "type": "string" } },
+        "cameras": { "type": "array", "items": { "type": "string" } },
+        "frames_total": { "type": "integer", "minimum": 0 },
+        "frame_resolutions": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": { "type": "integer" },
+            "minItems": 2,
+            "maxItems": 2
+          }
+        }
+      }
+    },
+    "detection_summary": {
+      "type": "object",
+      "required": ["faces", "plates", "vehicles_context_only"],
+      "properties": {
+        "faces": {
+          "type": "object",
+          "required": [
+            "candidates_masked",
+            "note",
+            "avg_candidates_per_frame",
+            "low_confidence_cases_flagged",
+            "confidence_distribution",
+            "size_histogram",
+            "confidence_histogram"
+          ]
+        },
+        "plates": {
+          "type": "object",
+          "required": [
+            "candidates_masked",
+            "note",
+            "avg_candidates_per_frame",
+            "low_confidence_cases_flagged",
+            "confidence_distribution",
+            "size_histogram",
+            "confidence_histogram"
+          ]
+        },
+        "vehicles_context_only": {
+          "type": "object",
+          "required": ["detected", "avg_per_frame"]
+        }
+      }
+    },
+    "masking": {
+      "type": "object",
+      "required": [
+        "detections_masked_pct",
+        "detections_masked_pct_note",
+        "face_mask_geometry",
+        "plate_mask_geometry",
+        "edge_feather_sigma_px",
+        "blur_method",
+        "statement"
+      ]
+    },
+    "blur_specification": {
+      "type": "object",
+      "required": [
+        "face_mask_geometry",
+        "face_pad_ratio",
+        "plate_mask_geometry",
+        "plate_pad_ratio",
+        "min_ellipse_side_px",
+        "feather_sigma_px",
+        "feather_kernel_px",
+        "blur_method",
+        "adaptive_target_px",
+        "min_sigma",
+        "fixed_kernel",
+        "adaptive_downscale_rule",
+        "alpha_blending_rule"
+      ]
+    },
+    "measured_performance_on_validation_set": {
+      "type": "object",
+      "required": ["status", "validation_set_id", "face_recall", "plate_recall", "note"],
+      "properties": {
+        "status": { "type": "string", "enum": ["COMPLETED", "NOT_EXECUTED"] },
+        "validation_set_id": { "type": ["string", "null"] },
+        "face_recall": { "type": ["number", "null"] },
+        "plate_recall": { "type": ["number", "null"] },
+        "note": { "type": "string" }
+      }
+    },
+    "session_audit": {
+      "type": "object",
+      "required": ["sampling", "automatic_checks", "human_review"],
+      "properties": {
+        "sampling": {
+          "type": "object",
+          "required": ["method", "seed", "total_frames", "sample_size", "sampling_ratio"]
+        },
+        "laplacian_check_mask_core": { "type": "object" },
+        "gradient_energy_check_mask_core": { "type": "object" },
+        "laplacian_check_full_box": { "type": "object" },
+        "automatic_checks": {
+          "type": "object",
+          "required": ["status", "boxes_checked", "boxes_failed", "boxes_unreliable", "ratio_median", "ratio_p95", "max_ratio_threshold"]
+        },
+        "human_review": {
+          "type": "object",
+          "required": [
+            "status",
+            "frames_reviewed",
+            "boxes_reviewed",
+            "tp",
+            "fp",
+            "missed_faces",
+            "missed_plates",
+            "note"
+          ],
+          "properties": {
+            "status": { "type": "string", "enum": ["COMPLETED", "NOT_EXECUTED"] }
+          }
+        }
+      }
+    },
+    "metadata_sanitization": {
+      "type": "object",
+      "required": [
+        "status",
+        "total_output_images_scanned",
+        "metadata_segments_found",
+        "all_sanitized",
+        "notes"
+      ]
+    },
+    "pixel_integrity_test": {
+      "type": "object",
+      "required": [
+        "status",
+        "frames_tested",
+        "input_format",
+        "output_format",
+        "max_abs_diff_levels",
+        "mean_abs_diff_levels",
+        "pct_unmasked_pixels_altered_by_compression",
+        "dilation_margin_px",
+        "findings_statement"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "models",
+        "config_sha256",
+        "environment",
+        "hardware",
+        "git",
+        "manifest_csv_sha256",
+        "runtime_s",
+        "images_per_s"
+      ]
+    },
+    "design_targets": {
+      "type": "object",
+      "required": ["face_target_recall", "plate_target_recall", "note"]
+    },
+    "known_limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "not_claimed": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "legal_notice": {
+      "type": "string"
+    },
+    "integrity": {
+      "type": "object",
+      "required": ["canonical_hash_method", "sheet_sha256", "data_sheet_sha256_file"],
+      "properties": {
+        "canonical_hash_method": { "type": "string" },
+        "sheet_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "data_sheet_sha256_file": { "type": "string" }
+      }
+    }
+  }
+}

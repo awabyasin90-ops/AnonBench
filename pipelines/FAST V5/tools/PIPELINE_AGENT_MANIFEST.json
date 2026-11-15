@@ -1,0 +1,501 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "project_title": "Anonymization Failure Patterns Across Real Drives and CARLA Simulation",
+  "version": "2.2.0",
+  "last_updated": "2026-11-03",
+  "description": "Master AI Agent guide and automated verification registry for 2 Ground-Truth Baselines and 5 Evaluated Anonymization Pipelines (+ 1 Sensor Platform).",
+  "evaluation_protocols": {
+    "protocol": "End-to-End evaluation under pristine as-shipped default confidence thresholds and native resolutions across 6 environmental conditions.",
+    "manual_audit_stage": "Manual human audit conducted on 1,200 images per condition across 6 conditions (7,200 images total) to verify ground-truth bounds and compute accuracy and detection miss rates.",
+    "pp4av_human_recognizability_filtering": {
+      "reference_paper": "Trinh et al., PP4AV: A Benchmarking Dataset for Privacy-Preserving Autonomous Driving, IEEE/CVF WACV 2023, Section 3, Tables 2 & 3",
+      "two_tier_annotation_protocol": {
+        "tier_1_base_annotation": "Preserve all contextually visible faces and plates (even 4-5 px) in master dataset with status='Ignore' (or 'Borderline'). Prevents arbitrary data deletion.",
+        "tier_2_confirmed_targets": "Primary evaluation targets with status='Confirmed'. Strictly filtered by face_width >= 10 px and plate_height >= 8 px."
+      },
+      "recognizability_thresholds": {
+        "face_width_min_px": 10,
+        "face_width_below_10_status": "Ignore (empirical human study shows <7px has 0.0% recognizability, 8-11px is unidentifiable blur)",
+        "plate_height_min_px": 8,
+        "plate_height_below_8_status": "Ignore (empirical human study shows <5px and 6-7px have 0.0% recognizability)"
+      },
+      "scale_stratification_size_bins": [
+        {
+          "bin": "Bin 1: Very Small",
+          "range": "< 16 px",
+          "distance": "Far distance (20+ meters)",
+          "role": "Extreme long-range sensitivity & small-object failure modes"
+        },
+        {
+          "bin": "Bin 2: Small",
+          "range": "16-32 px",
+          "distance": "Mid-to-far distance (10-20 meters)",
+          "role": "Standard urban crosswalk and vehicle tracking distance"
+        },
+        {
+          "bin": "Bin 3: Medium",
+          "range": "32-64 px",
+          "distance": "Standard driving distance (5-10 meters)",
+          "role": "Standard automotive perception operating range"
+        },
+        {
+          "bin": "Bin 4: Large",
+          "range": "> 64 px",
+          "distance": "Close proximity (< 5 meters)",
+          "role": "Safety-critical close encounters, intersections, and ego stops"
+        }
+      ]
+    }
+  },
+  "pipelines": {
+    "insightface_scrfd34g_gt": {
+      "display_name": "InsightFace \u2014 SCRFD-34G (High-Recall Face Reference Baseline)",
+      "category": "ground_truth",
+      "architecture": "SCRFD-34G Bottleneck ResNet (85.29% Hard WIDER FACE benchmark)",
+      "purpose": "Independent offline face reference detector capturing tiny, angled, and occluded faces without architectural overlap with evaluated pipelines.",
+      "directory": "2-Gt-Pipelien's/insightface-face",
+      "repository_url": "https://github.com/deepinsight/insightface/tree/master/detection/scrfd",
+      "python_version_recommended": ">=3.8, <=3.11",
+      "pip_dependencies": [
+        "insightface>=0.7.3",
+        "onnx>=1.13.0",
+        "onnxruntime>=1.14.0",
+        "opencv-python>=4.8.0",
+        "numpy>=1.22.0",
+        "scipy>=1.7.0",
+        "scikit-image>=0.19.0",
+        "Pillow>=9.0.0",
+        "tqdm>=4.64.0",
+        "requests>=2.28.0"
+      ],
+      "gpu_pip_dependencies": [
+        "onnxruntime-gpu>=1.14.0"
+      ],
+      "weights": [
+        {
+          "model_name": "SCRFD_34G",
+          "filename": "scrfd_34g.onnx",
+          "destination_dir": "2-Gt-Pipelien's/insightface-face/models",
+          "verification_path": "2-Gt-Pipelien's/insightface-face/models/scrfd_34g.onnx",
+          "download_method": "http_or_huggingface",
+          "status": "already_present"
+        },
+        {
+          "model_name": "buffalo_l_oracle",
+          "filename": "det_10g.onnx",
+          "destination_dir": "2-Gt-Pipelien's/insightface-face/models/buffalo_l",
+          "verification_path": "2-Gt-Pipelien's/insightface-face/models/buffalo_l/det_10g.onnx",
+          "download_method": "insightface_api",
+          "status": "already_present"
+        }
+      ],
+      "check_command": "python3 -c \"import insightface; print('InsightFace version:', insightface.__version__)\""
+    },
+    "rtdetr_v2_plate_gt": {
+      "display_name": "RT-DETR v2 \u2014 License Plate Detector (Transformer Plate Reference Baseline)",
+      "category": "ground_truth",
+      "architecture": "Vision Transformer (DETR) Object Detector",
+      "purpose": "Detects vehicle license plates with Vision Transformer architecture, breaking architectural similarity with standard YOLO detectors to prevent benchmark bias.",
+      "directory": "2-Gt-Pipelien's/RT-DETR-Plate",
+      "repository_url": "https://github.com/lyuwenyu/RT-DETR",
+      "pretrained_plate_weights_url": "https://huggingface.co/models?search=rt-detr+license+plate",
+      "python_version_recommended": ">=3.8, <=3.11",
+      "pip_dependencies": [
+        "torch>=2.0.1",
+        "torchvision>=0.15.2",
+        "ultralytics>=8.0.0",
+        "pyyaml>=6.0",
+        "scipy>=1.7.0",
+        "pycocotools>=2.0.6",
+        "faster-coco-eval>=1.6.6",
+        "datasets>=2.14.0",
+        "huggingface_hub>=0.19.0",
+        "onnx>=1.13.0",
+        "tqdm>=4.64.0"
+      ],
+      "gpu_pip_dependencies": [
+        "onnxruntime-gpu>=1.14.0"
+      ],
+      "weights": [
+        {
+          "model_name": "rtdetr_license_plate_best",
+          "filename": "rtdetr_license_plate_best.pt",
+          "destination_dir": "2-Gt-Pipelien's/RT-DETR-Plate/weights",
+          "verification_path": "2-Gt-Pipelien's/RT-DETR-Plate/weights/rtdetr_license_plate_best.pt",
+          "download_method": "huggingface_hub",
+          "status": "already_present",
+          "classes": [
+            "plate"
+          ],
+          "notes": "Specialized single-class license plate detector (Ultralytics RT-DETR-L). Ground-Truth Oracle."
+        },
+        {
+          "model_name": "plate_rtdetr_onnx",
+          "filename": "plate_rtdetr.onnx",
+          "destination_dir": "2-Gt-Pipelien's/RT-DETR-Plate/weights",
+          "verification_path": "2-Gt-Pipelien's/RT-DETR-Plate/weights/plate_rtdetr.onnx",
+          "download_method": "huggingface_hub",
+          "status": "already_present",
+          "classes": [
+            "plate"
+          ],
+          "notes": "Specialized single-class license plate ONNX detector. Ground-Truth Oracle."
+        },
+        {
+          "model_name": "rtdetrv2_r50vd_6x_coco",
+          "filename": "rtdetrv2_r50vd_6x_coco_ema.pth",
+          "destination_dir": "2-Gt-Pipelien's/RT-DETR-Plate/weights",
+          "verification_path": "2-Gt-Pipelien's/RT-DETR-Plate/weights/rtdetrv2_r50vd_6x_coco_ema.pth",
+          "download_method": "http_direct",
+          "status": "already_present",
+          "classes": "80_coco_classes",
+          "notes": "Official architecture checkpoint pre-trained on generic 80 COCO classes. Do NOT use directly for plate oracle."
+        },
+        {
+          "model_name": "rtdetr_l_coco80",
+          "filename": "rtdetr-l.pt",
+          "destination_dir": "2-Gt-Pipelien's/RT-DETR-Plate/weights",
+          "verification_path": "2-Gt-Pipelien's/RT-DETR-Plate/weights/rtdetr-l.pt",
+          "download_method": "ultralytics_or_huggingface",
+          "status": "already_present",
+          "classes": "80_coco_classes",
+          "notes": "Ultralytics general 80-class COCO checkpoint. Do NOT use directly for plate oracle."
+        }
+      ],
+      "dataset": {
+        "name": "justjuu/real-time-license-plate-detection-coco-hf",
+        "source": "huggingface",
+        "download_command_python": "from datasets import load_dataset; dataset = load_dataset('justjuu/real-time-license-plate-detection-coco-hf')"
+      },
+      "check_command": "python3 -c \"import torch, ultralytics; print('Torch:', torch.__version__, 'Ultralytics RT-DETR ready')\""
+    },
+    "proposed_fast_v5": {
+      "display_name": "Proposed Pipeline (FAST v5) \u2014 Dual TensorRT Engine",
+      "category": "evaluated_pipeline",
+      "pipeline_index": 1,
+      "architecture": "Dual Face & Plate Detector in TensorRT (INT8 / FP16) + CUDA",
+      "purpose": "High-Speed AV Baseline combining quantized dual detector with asynchronous CUDA multiprocessing; multi-scale evaluation down to <16px.",
+      "directory": "5-pipeline's/FAST",
+      "confidence_configuration": "As-Shipped Shipping Defaults (Face: 0.15, Plate: 0.35)",
+      "pixel_scope": "Multi-scale; evaluates down to <16px",
+      "python_version_recommended": ">=3.10",
+      "pip_dependencies": [
+        "torch>=2.0.0",
+        "torchvision>=0.15.0",
+        "ultralytics>=8.0.0",
+        "opencv-python>=4.8.0",
+        "numpy>=1.24.0",
+        "pyyaml>=6.0",
+        "pandas>=2.0.0",
+        "openpyxl>=3.1.0",
+        "psutil>=5.9.0",
+        "pytest>=7.0.0"
+      ],
+      "gpu_pip_dependencies": [
+        "pynvml>=11.5.0"
+      ],
+      "weights": [
+        {
+          "model_name": "yolov8m-face.pt",
+          "filename": "yolov8m-face.pt",
+          "destination_dir": "5-pipeline's/FAST/weights",
+          "verification_path": "5-pipeline's/FAST/weights/yolov8m-face.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "yolov8m-face.onnx",
+          "filename": "yolov8m-face.onnx",
+          "destination_dir": "5-pipeline's/FAST/weights",
+          "verification_path": "5-pipeline's/FAST/weights/yolov8m-face.onnx",
+          "status": "already_present"
+        },
+        {
+          "model_name": "yolov8m-face_fp16_b4.engine",
+          "filename": "yolov8m-face_fp16_b4.engine",
+          "destination_dir": "5-pipeline's/FAST/weights",
+          "verification_path": "5-pipeline's/FAST/weights/yolov8m-face_fp16_b4.engine",
+          "status": "already_present"
+        },
+        {
+          "model_name": "yolo11m.pt",
+          "filename": "yolo11m.pt",
+          "destination_dir": "5-pipeline's/FAST/weights",
+          "verification_path": "5-pipeline's/FAST/weights/yolo11m.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "yolo11m.onnx",
+          "filename": "yolo11m.onnx",
+          "destination_dir": "5-pipeline's/FAST/weights",
+          "verification_path": "5-pipeline's/FAST/weights/yolo11m.onnx",
+          "status": "already_present"
+        },
+        {
+          "model_name": "plate_nano_192x320_best.pt",
+          "filename": "plate_nano_192x320_best.pt",
+          "destination_dir": "5-pipeline's/FAST/weights",
+          "verification_path": "5-pipeline's/FAST/weights/plate_nano_192x320_best.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "plate_nano_192x320_best.onnx",
+          "filename": "plate_nano_192x320_best.onnx",
+          "destination_dir": "5-pipeline's/FAST/weights",
+          "verification_path": "5-pipeline's/FAST/weights/plate_nano_192x320_best.onnx",
+          "status": "already_present"
+        }
+      ],
+      "check_command": "python3 -c \"import torch, ultralytics; print('FAST v5 Proposed Pipeline dependencies ready.')\""
+    },
+    "meta_egoblur": {
+      "display_name": "Meta AI \u2014 EgoBlur (Industry Big-Tech Baseline)",
+      "category": "evaluated_pipeline",
+      "pipeline_index": 2,
+      "architecture": "Dual Faster-RCNN (~104M params) in PyTorch TorchScript (.jit FP32)",
+      "purpose": "Primary industry benchmark from Meta AI under Apache-2.0 license with CLI-tunable confidence thresholds and box-scale factors.",
+      "directory": "5-pipeline's/EgoBlur",
+      "repository_url": "https://github.com/facebookresearch/EgoBlur",
+      "huggingface_url": "https://huggingface.co/projectaria/EgoBlur",
+      "portal_url": "https://www.projectaria.com/tools/egoblur/",
+      "confidence_configuration": "Default shipping thresholds (Face: 0.67416, Plate: 0.74475)",
+      "pixel_scope": "High-res ego/street; evaluates all 4 px bins",
+      "python_version_recommended": ">=3.10, <=3.12",
+      "pip_dependencies": [
+        "egoblur>=2.0.1",
+        "torch>=2.0.0",
+        "torchvision>=0.15.0",
+        "moviepy>=1.0.3,<2.0.0",
+        "numpy>=1.24.0,<3.0.0",
+        "opencv-python-headless>=4.7.0,<5.0.0",
+        "tqdm>=4.64.0,<5.0.0",
+        "av>=12.0.0,<14.0.0"
+      ],
+      "weights": [
+        {
+          "model_name": "ego_blur_face_gen2",
+          "filename": "ego_blur_face_gen2.jit",
+          "destination_dir": "5-pipeline's/EgoBlur/weights",
+          "verification_path": "5-pipeline's/EgoBlur/weights/ego_blur_face_gen2.jit",
+          "download_method": "meta_portal_signed_link",
+          "status": "already_present"
+        },
+        {
+          "model_name": "ego_blur_lp_gen2",
+          "filename": "ego_blur_lp_gen2.jit",
+          "destination_dir": "5-pipeline's/EgoBlur/weights",
+          "verification_path": "5-pipeline's/EgoBlur/weights/ego_blur_lp_gen2.jit",
+          "download_method": "meta_portal_signed_link",
+          "status": "already_present"
+        }
+      ],
+      "check_command": "python3 -c \"import torch; print('TorchScript JIT ready for EgoBlur:', hasattr(torch.jit, 'load'))\""
+    },
+    "dashcam_cleaner": {
+      "display_name": "DashcamCleaner (YOLOv8 Community Dashcam Baseline)",
+      "category": "evaluated_pipeline",
+      "pipeline_index": 3,
+      "architecture": "YOLOv8 Face & Plate Detector in Standard PyTorch (FP32 / FP16)",
+      "purpose": "Uses YOLOv8 combined with standard masking and Gaussian/pixelation blurring for dashcam footage.",
+      "directory": "5-pipeline's/DashcamCleaner",
+      "repository_url": "https://github.com/tfaehse/DashcamCleaner",
+      "confidence_configuration": "Default shipping threshold (0.40)",
+      "pixel_scope": "640 - 1280px inference tensor",
+      "python_version_recommended": ">=3.8, <=3.11",
+      "system_dependencies": [
+        "ffmpeg"
+      ],
+      "pip_dependencies": [
+        "torch>=2.0.0",
+        "torchvision>=0.8.1",
+        "torchaudio>=0.8.1",
+        "ultralytics>=8.0.59",
+        "opencv-python>=4.1.2",
+        "imageio>=2.9.0",
+        "imageio-ffmpeg>=0.4.5",
+        "numpy>=1.18.5",
+        "pandas>=1.2.3",
+        "Pillow>=8.0.0",
+        "psutil>=5.9.1",
+        "pyside6>=6.5.1.1",
+        "PyYAML>=5.3.1",
+        "scipy>=1.4.1",
+        "tqdm>=4.41.0",
+        "omegaconf>=2.3.0"
+      ],
+      "weights": [
+        {
+          "model_name": "1080p_medium_v8",
+          "filename": "1080p_medium_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/1080p_medium_v8.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "1080p_small_v8",
+          "filename": "1080p_small_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/1080p_small_v8.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "1080p_nano_v8",
+          "filename": "1080p_nano_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/1080p_nano_v8.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "720p_medium_v8",
+          "filename": "720p_medium_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/720p_medium_v8.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "720p_small_v8",
+          "filename": "720p_small_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/720p_small_v8.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "720p_nano_v8",
+          "filename": "720p_nano_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/720p_nano_v8.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "360p_small_v8",
+          "filename": "360p_small_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/360p_small_v8.pt",
+          "status": "already_present"
+        },
+        {
+          "model_name": "360p_nano_v8",
+          "filename": "360p_nano_v8.pt",
+          "destination_dir": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights",
+          "verification_path": "5-pipeline's/DashcamCleaner/dashcamcleaner/weights/360p_nano_v8.pt",
+          "status": "already_present"
+        }
+      ],
+      "check_command": "python3 -c \"import torch, ultralytics; print('DashcamCleaner PyTorch ready:', torch.__version__)\""
+    },
+    "fusionportable_anonymizer": {
+      "display_name": "FusionPortable Anonymizer (Automotive Baseline)",
+      "category": "evaluated_pipeline",
+      "pipeline_index": 4,
+      "architecture": "FusionPortable Retrained Faster R-CNN in ONNX Runtime / TF (FP32)",
+      "purpose": "Built for automotive camera rigs with separate CLI confidence thresholds for faces and plates; evaluated within standard perspective scope (no Fisheye).",
+      "directory": "5-pipeline's/Anonymizer",
+      "repository_url": "https://github.com/fusionportable/Anonymizer",
+      "original_uai_url": "https://github.com/understand-ai/anonymizer",
+      "confidence_configuration": "Default shipping thresholds (Face: 0.30, Plate: 0.30)",
+      "pixel_scope": "Standard perspective only (no Fisheye)",
+      "python_version_recommended": ">=3.8, <=3.11",
+      "pip_dependencies": [
+        "onnxruntime>=1.14.0",
+        "Pillow>=9.0.0",
+        "matplotlib>=3.2.0",
+        "tqdm>=4.40.0",
+        "scipy>=1.4.0",
+        "opencv-python-headless>=4.5.0",
+        "gdown>=4.7.0"
+      ],
+      "gpu_pip_dependencies": [
+        "onnxruntime-gpu>=1.14.0"
+      ],
+      "weights": [
+        {
+          "model_name": "face.onnx",
+          "filename": "face.onnx",
+          "destination_dir": "5-pipeline's/Anonymizer/weights",
+          "verification_path": "5-pipeline's/Anonymizer/weights/face.onnx",
+          "download_method": "google_drive",
+          "status": "already_present"
+        },
+        {
+          "model_name": "plate.onnx",
+          "filename": "plate.onnx",
+          "destination_dir": "5-pipeline's/Anonymizer/weights",
+          "verification_path": "5-pipeline's/Anonymizer/weights/plate.onnx",
+          "download_method": "google_drive",
+          "status": "already_present"
+        }
+      ],
+      "check_command": "python3 -c \"import onnxruntime as ort, PIL, scipy; print('ONNXRuntime version:', ort.__version__)\""
+    },
+    "generative_anonymizer": {
+      "display_name": "Generative Anonymizer \u2014 DeepPrivacy2 & Big-LaMa (GAN Synthesis & Inpainting)",
+      "category": "evaluated_pipeline",
+      "pipeline_index": 5,
+      "architecture": "DeepPrivacy2 StyleGAN2-UNet + Big-LaMa Fast Fourier Convolutions (FFC)",
+      "purpose": "Generative face/body identity replacement and plate inpainting that synthesizes realistic context without pixelated/blurred degradation.",
+      "directory": "5-pipeline's/Generative Anonymizer",
+      "repository_url_dp2": "https://github.com/hukkelas/deep_privacy2",
+      "repository_url_lama": "https://github.com/advimman/lama",
+      "confidence_configuration": "Default detection threshold (0.30)",
+      "pixel_scope": "Full automotive perspective images",
+      "python_version_recommended": ">=3.8, <=3.11",
+      "pip_dependencies": [
+        "torch>=2.0.1",
+        "torchvision>=0.15.2",
+        "opencv-python-headless>=4.8.0",
+        "numpy>=1.22.0",
+        "scipy>=1.7.0",
+        "Pillow>=9.0.0",
+        "omegaconf>=2.3.0",
+        "tqdm>=4.64.0",
+        "albumentations>=0.5.2",
+        "kornia>=0.5.0"
+      ],
+      "gpu_pip_dependencies": [
+        "ninja"
+      ],
+      "weights": [
+        {
+          "model_name": "deep_privacy2_face_stylegan",
+          "filename": "89660f04-5c11-4dbf-adac-cbe2f11b0aeea25cbf78-7558-475a-b3c7-03f5c10b7934646b0720-ca0a-4d53-aded-daddbfa45c9e",
+          "destination_dir": "5-pipeline's/Generative Anonymizer/deep_privacy2/weights",
+          "verification_path": "5-pipeline's/Generative Anonymizer/deep_privacy2/weights/89660f04-5c11-4dbf-adac-cbe2f11b0aeea25cbf78-7558-475a-b3c7-03f5c10b7934646b0720-ca0a-4d53-aded-daddbfa45c9e",
+          "download_method": "huggingface_spaces",
+          "status": "already_present"
+        },
+        {
+          "model_name": "deep_privacy2_body_stylegan",
+          "filename": "21841da7-2546-4ce3-8460-909b3a63c58b13aac1a1-c778-4c8d-9b69-3e5ed2cde9de1524e76e-7aa6-4dd8-b643-52abc9f0792c",
+          "destination_dir": "5-pipeline's/Generative Anonymizer/deep_privacy2/weights",
+          "verification_path": "5-pipeline's/Generative Anonymizer/deep_privacy2/weights/21841da7-2546-4ce3-8460-909b3a63c58b13aac1a1-c778-4c8d-9b69-3e5ed2cde9de1524e76e-7aa6-4dd8-b643-52abc9f0792c",
+          "download_method": "huggingface_spaces",
+          "status": "already_present"
+        },
+        {
+          "model_name": "deep_privacy2_dsfd_face_detector",
+          "filename": "WIDERFace_DSFD_RES152.pth",
+          "destination_dir": "5-pipeline's/Generative Anonymizer/deep_privacy2/weights",
+          "verification_path": "5-pipeline's/Generative Anonymizer/deep_privacy2/weights/WIDERFace_DSFD_RES152.pth",
+          "download_method": "huggingface_spaces",
+          "status": "download_pending"
+        },
+        {
+          "model_name": "big_lama_best_checkpoint",
+          "filename": "best.ckpt",
+          "destination_dir": "5-pipeline's/Generative Anonymizer/lama/big-lama/models",
+          "verification_path": "5-pipeline's/Generative Anonymizer/lama/big-lama/models/best.ckpt",
+          "download_method": "huggingface_zip",
+          "status": "already_present"
+        },
+        {
+          "model_name": "big_lama_config",
+          "filename": "config.yaml",
+          "destination_dir": "5-pipeline's/Generative Anonymizer/lama/big-lama",
+          "verification_path": "5-pipeline's/Generative Anonymizer/lama/big-lama/config.yaml",
+          "download_method": "huggingface_zip",
+          "status": "already_present"
+        }
+      ],
+      "check_command": "python3 -c \"import torch, omegaconf; print('Generative PyTorch ready:', torch.__version__)\""
+    }
+  }
+}

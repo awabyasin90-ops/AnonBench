@@ -1,0 +1,6 @@
+**/__pychache__
+*.pyc
+*.pb
+*.bag
+*.pth
+*.DS_Store

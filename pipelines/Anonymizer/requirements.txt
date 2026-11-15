@@ -1,0 +1,14 @@
+# Requirements for FusionPortable / Understand.ai ONNX Anonymizer (Automotive Baseline)
+# Recommended Python: >=3.8, <=3.11
+
+# Core CPU / Standard Dependencies:
+onnxruntime>=1.14.0
+Pillow>=9.0.0
+matplotlib>=3.2.0
+tqdm>=4.40.0
+scipy>=1.4.0
+opencv-python-headless>=4.5.0
+gdown>=4.7.0
+
+# Optional GPU Acceleration Dependencies (Select compatible CUDA version):
+# onnxruntime-gpu>=1.14.0

@@ -1,0 +1,76 @@
+# ==============================================================================
+# AnonBench (.gitignore)
+# Strict Publication & GDPR/KVKK Privacy Shield for Q1 Journal Repository
+# ==============================================================================
+
+# Virtual environments & Python caches
+.venv/
+**/.venv/
+venv/
+**/venv/
+env/
+**/env/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+**/*.egg-info/
+.pytest_cache/
+.DS_Store
+.DS_Store?
+._*
+.vscode/
+.idea/
+
+# Model weights & compiled engines (Files >100MB blocked by GitHub)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.trt
+*.bin
+*.safetensors
+*.ckpt
+*.pb
+*.jit
+*.tflite
+weights/
+**/weights/
+checkpoints/
+**/checkpoints/
+models/
+**/models/
+*.dmg
+*.pkg
+
+# Temporary workspaces & raw unblurred driving frames
+outputs/V.1/
+outputs/V.2/
+outputs/v.3/
+outputs/xanylabeling_review/
+outputs/10_Frame_Comparisons/
+outputs/results_pendik_100/blurred/
+demo_dataset/
+demo_data/
+
+# Block raw media files by default
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.avi
+*.mov
+
+# Logs & temp files
+*.log
+task-*.log
+*.tmp
+*.gdoc
+*.gsheet
+
+# WHITELIST: Allow publication charts, CSVs, and Markdown reports
+!outputs/results_pendik_100/charts/*.png
+!outputs/results_pendik_100/*.csv
+!outputs/results_pendik_100/*.md

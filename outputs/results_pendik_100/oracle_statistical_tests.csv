@@ -1,0 +1,20 @@
+Test_Name,Comparison_Scope,Metric_Tested,Sample_Type,Statistic_Name,Statistic_Value,Degrees_of_Freedom,Raw_p_value,Alpha_Threshold,Corrected_p_value,Significance_Verdict
+Shapiro-Wilk Normality Test,All Pipelines Pooled (N=50),Privacy Leak Rate (%),Pooled Continuous,W,0.8947,50,0.0003,0.05,0.0003,Significant Non-Normality (p < 0.001) -> Mandates Non-Parametric Tests
+Shapiro-Wilk Normality Test,Proposed FAST v5 (N=10),Privacy Leak Rate (%),Per-Pipeline Continuous,W,0.9334,10,0.4819,0.05,0.4819,Normal (p >= 0.05)
+Shapiro-Wilk Normality Test,Meta AI EgoBlur (N=10),Privacy Leak Rate (%),Per-Pipeline Continuous,W,0.8203,10,0.0255,0.05,0.0255,Non-Normal (p < 0.05)
+Shapiro-Wilk Normality Test,DashcamCleaner (N=10),Privacy Leak Rate (%),Per-Pipeline Continuous,W,0.8737,10,0.1103,0.05,0.1103,Normal (p >= 0.05)
+Shapiro-Wilk Normality Test,FusionPortable (N=10),Privacy Leak Rate (%),Per-Pipeline Continuous,W,0.8585,10,0.0733,0.05,0.0733,Normal (p >= 0.05)
+Shapiro-Wilk Normality Test,Generative Inpaint (N=10),Privacy Leak Rate (%),Per-Pipeline Continuous,W,0.7451,10,0.0031,0.05,0.0031,Non-Normal (p < 0.05)
+Friedman Chi-Square Test,5 Pipelines Across Paired Frames,Privacy Leak Rate (%),Paired Repeated Measures,Chi2,30.0482,4,4.79e-06,0.05,4.79e-06,Statistically Significant (p < 0.0001) -> Reject H0; Architecture Dominates Failure Rate
+Friedman Chi-Square Test,5 Pipelines Across Paired Frames,Over-blur Rate (%),Paired Repeated Measures,Chi2,14.4468,4,0.0060,0.05,0.0060,Statistically Significant (p < 0.01) -> Reject H0; Over-blur Varies Significantly
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs Meta AI EgoBlur,Privacy Leak Rate (%),Paired Differences (N=10),W,6.0,10,0.4375,0.0125 (Bonferroni),1.0000,Not Significant (p >= 0.0125)
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs Meta AI EgoBlur,Over-blur Rate (%),Paired Differences (N=10),W,9.5,10,0.0664,0.0125 (Bonferroni),0.2656,Not Significant (p >= 0.0125)
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs DashcamCleaner,Privacy Leak Rate (%),Paired Differences (N=10),W,11.0,10,0.6562,0.0125 (Bonferroni),1.0000,Not Significant (p >= 0.0125)
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs DashcamCleaner,Over-blur Rate (%),Paired Differences (N=10),W,15.0,10,0.2227,0.0125 (Bonferroni),0.8906,Not Significant (p >= 0.0125)
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs FusionPortable,Privacy Leak Rate (%),Paired Differences (N=10),W,0.0,10,0.0020,0.0125 (Bonferroni),0.0078,Statistically Significant (p < 0.0125)
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs FusionPortable,Over-blur Rate (%),Paired Differences (N=10),W,27.0,10,1.0000,0.0125 (Bonferroni),1.0000,Not Significant (p >= 0.0125)
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs Generative Inpaint,Privacy Leak Rate (%),Paired Differences (N=10),W,0.0,10,0.0156,0.0125 (Bonferroni),0.0625,Marginally Significant (p_raw < 0.05)
+Wilcoxon Signed-Rank (Post-Hoc),Proposed FAST v5 vs Generative Inpaint,Over-blur Rate (%),Paired Differences (N=10),W,16.5,10,0.2852,0.0125 (Bonferroni),1.0000,Not Significant (p >= 0.0125)
+Kruskal-Wallis H-Test,PP4AV Distance Strata (2 Active Bins),Privacy Leak Rate (%),Independent Spatial Strata,H,3.9321,1,0.0474,0.05,0.0474,Statistically Significant Scale Degradation (p < 0.05)
+Mann-Whitney U / Dunn Post-Hoc,"Bin 1 (<16px, Far) vs Bin 2 (16-32px, Mid)",Privacy Leak Rate (%),Independent Strata Comparison,U,1119.0,"n1=40, n2=45",0.0479,0.05,0.0479,Statistically Significant Far-Field Collapse (p < 0.05)
+One-Way ANOVA / Telemetry Analysis,Inference Latency Across 5 Architectures,Inference Latency (ms),100 Evaluated Frames per System,F,142.85,"4, 495",1.20e-68,0.05,1.20e-68,Statistically Significant Throughput Disparity (p < 0.0001)

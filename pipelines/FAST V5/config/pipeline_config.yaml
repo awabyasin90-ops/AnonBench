@@ -1,0 +1,40 @@
+# ==============================================================================
+# FAST v5.0-Research Pipeline Configuration
+# Autonomous Vehicle Privacy Anonymization & Empirical Audit Suite
+# ==============================================================================
+
+input_dir: "inputs"
+output_dir: "outputs"
+run_dir: "runs"
+recursive: true
+extensions: [".jpg", ".jpeg", ".png"]
+skip_existing: true
+
+# Detection Models (weights in weights/ folder)
+models:
+  face:
+    engine: "weights/yolov8m-face_fp16_b4.engine"
+    pt: "weights/yolov8m-face.pt"
+    nc: 1
+    long_side: 1280
+    conf: 0.15
+    iou: 0.7
+    max_det: 300
+  vehicle:
+    engine: "weights/yolo11m_fp16_b4.engine"
+    pt: "weights/yolo11m.pt"
+    nc: 80
+    long_side: 640
+    conf: 0.25
+    iou: 0.7
+    classes: [2, 5, 7]
+  plate:
+    engine: "weights/plate_nano_fp16_192x320.engine"
+    pt: "weights/plate_nano_192x320_best.pt"
+    nc: 1
+    long_side: 320
+    conf: 0.35
+    iou: 0.5
+    crop_vehicle: true
+    plate_classes: ["license_plate"]
+    vehicle_classes: [2, 5, 7]
