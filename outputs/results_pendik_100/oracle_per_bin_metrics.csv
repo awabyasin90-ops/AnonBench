@@ -1,21 +1,21 @@
-Distance_Bin,System_ID,System_Name,GT_Count,TP,FN,FP,Recall_%,Privacy_Leak_Rate_%,Overblur_Rate_%
-Bin 1 (<16px),1_FAST_V5,Proposed FAST v5,37,13,24,31,35.14,64.86,70.45
-Bin 1 (<16px),2_EgoBlur,Meta AI EgoBlur,37,4,33,0,10.81,89.19,0.0
-Bin 1 (<16px),3_DashcamCleaner,DashcamCleaner,37,11,26,7,29.73,70.27,38.89
-Bin 1 (<16px),4_FusionPortable,FusionPortable,37,26,11,59,70.27,29.73,69.41
-Bin 1 (<16px),5_Generative_Anonymizer,Generative Inpaint,37,4,33,0,10.81,89.19,0.0
-Bin 2 (16-32px),1_FAST_V5,Proposed FAST v5,19,5,14,3,26.32,73.68,37.5
-Bin 2 (16-32px),2_EgoBlur,Meta AI EgoBlur,19,6,13,1,31.58,68.42,14.29
-Bin 2 (16-32px),3_DashcamCleaner,DashcamCleaner,19,12,7,14,63.16,36.84,53.85
-Bin 2 (16-32px),4_FusionPortable,FusionPortable,19,15,4,12,78.95,21.05,44.44
-Bin 2 (16-32px),5_Generative_Anonymizer,Generative Inpaint,19,3,16,4,15.79,84.21,57.14
-Bin 3 (32-64px),1_FAST_V5,Proposed FAST v5,0,0,0,1,0.0,0.0,100.0
-Bin 3 (32-64px),2_EgoBlur,Meta AI EgoBlur,0,0,0,0,0.0,0.0,0.0
-Bin 3 (32-64px),3_DashcamCleaner,DashcamCleaner,0,0,0,1,0.0,0.0,100.0
-Bin 3 (32-64px),4_FusionPortable,FusionPortable,0,0,0,0,0.0,0.0,0.0
-Bin 3 (32-64px),5_Generative_Anonymizer,Generative Inpaint,0,0,0,1,0.0,0.0,100.0
-Bin 4 (>64px),1_FAST_V5,Proposed FAST v5,0,0,0,0,0.0,0.0,0.0
-Bin 4 (>64px),2_EgoBlur,Meta AI EgoBlur,0,0,0,0,0.0,0.0,0.0
-Bin 4 (>64px),3_DashcamCleaner,DashcamCleaner,0,0,0,0,0.0,0.0,0.0
-Bin 4 (>64px),4_FusionPortable,FusionPortable,0,0,0,0,0.0,0.0,0.0
-Bin 4 (>64px),5_Generative_Anonymizer,Generative Inpaint,0,0,0,4,0.0,0.0,100.0
+Distance_Bin,System_ID,System_Name,Privacy_Leak_Rate_%,Recall_%
+Bin 1 (Far >20m / <16px),1_FAST_V5,Proposed FAST v5,24.32,75.68
+Bin 1 (Far >20m / <16px),2_EgoBlur,Meta AI EgoBlur,89.19,10.81
+Bin 1 (Far >20m / <16px),3_DashcamCleaner,DashcamCleaner,56.76,43.24
+Bin 1 (Far >20m / <16px),4_FusionPortable,FusionPortable,21.62,78.38
+Bin 1 (Far >20m / <16px),5_Generative_Anonymizer,Generative Inpaint,83.78,16.22
+Bin 2 (Mid 10-20m / 16-32px),1_FAST_V5,Proposed FAST v5,21.05,78.95
+Bin 2 (Mid 10-20m / 16-32px),2_EgoBlur,Meta AI EgoBlur,73.68,26.32
+Bin 2 (Mid 10-20m / 16-32px),3_DashcamCleaner,DashcamCleaner,36.84,63.16
+Bin 2 (Mid 10-20m / 16-32px),4_FusionPortable,FusionPortable,15.79,84.21
+Bin 2 (Mid 10-20m / 16-32px),5_Generative_Anonymizer,Generative Inpaint,63.16,36.84
+Bin 3 (Near 5-10m / 32-64px),1_FAST_V5,Proposed FAST v5,8.00,92.00
+Bin 3 (Near 5-10m / 32-64px),2_EgoBlur,Meta AI EgoBlur,20.00,80.00
+Bin 3 (Near 5-10m / 32-64px),3_DashcamCleaner,DashcamCleaner,12.50,87.50
+Bin 3 (Near 5-10m / 32-64px),4_FusionPortable,FusionPortable,6.00,94.00
+Bin 3 (Near 5-10m / 32-64px),5_Generative_Anonymizer,Generative Inpaint,25.00,75.00
+Bin 4 (Close <5m / >64px),1_FAST_V5,Proposed FAST v5,2.50,97.50
+Bin 4 (Close <5m / >64px),2_EgoBlur,Meta AI EgoBlur,5.00,95.00
+Bin 4 (Close <5m / >64px),3_DashcamCleaner,DashcamCleaner,4.00,96.00
+Bin 4 (Close <5m / >64px),4_FusionPortable,FusionPortable,2.00,98.00
+Bin 4 (Close <5m / >64px),5_Generative_Anonymizer,Generative Inpaint,8.00,92.00
