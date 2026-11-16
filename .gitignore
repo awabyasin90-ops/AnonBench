@@ -49,9 +49,6 @@ models/
 outputs/V.1/
 outputs/V.2/
 outputs/v.3/
-outputs/V.3*/
-outputs/v.3*/
-"outputs/V.3 test/"
 outputs/xanylabeling_review/
 outputs/10_Frame_Comparisons/
 outputs/results_pendik_100/blurred/
@@ -77,3 +74,5 @@ task-*.log
 !outputs/results_pendik_100/charts/*.png
 !outputs/results_pendik_100/*.csv
 !outputs/results_pendik_100/*.md
+!outputs/V.3 test/
+!outputs/V.3 test/**
