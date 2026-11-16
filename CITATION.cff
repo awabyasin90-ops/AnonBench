@@ -3,11 +3,8 @@ message: "If you use this benchmark suite, customized X-AnyLabeling oracle, or s
 title: "Empirical Benchmarking of Anonymization Failure Patterns in Real and Simulated Autonomous Driving Data"
 type: software
 authors:
-  - family-names: "Yasin"
-    given-names: "Awab"
-    affiliation: "Istanbul Okan University ""
-    "
-    
+  - family-names: ""
+    given-names: ""
 version: 1.0.0
 date-released: 2026-11-16
 license: MIT
@@ -18,4 +15,3 @@ keywords:
   - edge-telemetry
   - x-anylabeling
   - computer-vision-benchmark
-

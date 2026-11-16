@@ -188,12 +188,15 @@ python3 benchmark_suite/generate_comparison_frames.py
 If you use this benchmark suite, evaluation protocol, or dataset annotations in your research, please cite:
 
 ```bibtex
-@article{yasin2026anonbench,
+@article{anonbench2026,
   title={Empirical Benchmarking of Anonymization Failure Patterns in Real and Simulated Autonomous Driving Data},
-  author={Yasin, Awab and G{\"o}k{\c{c}}e, Can},
-  journal={IEEE Transactions on Intelligent Vehicles (Under Review)},
+  author={},
+  journal={},
   year={2026}
 }
 ```
+
+**Contact:**
+- For technical questions, bug reports, or benchmark extensions, please open an issue in this repository.
 
 **License:** Distributed under the [MIT License](LICENSE).
