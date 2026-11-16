@@ -26,39 +26,21 @@ Visual anonymization in automated driving systems requires continuous privacy pr
 
 ```text
 3_Systems/
-├── README.md                                  # Repository documentation & reproducibility guide
-├── LICENSE                                    # MIT License
-├── CITATION.cff                               # Academic citation metadata
-├── .gitignore                                 # Excludes raw images, heavy weights, and virtual envs
-├── BENCHMARK_SPECIFICATION_TABLES.md          # Scientific benchmark specification protocols
-├── PIPELINE_AGENT_GUIDE.md                    # Agent runbook for pipeline invocation
+├── README.md                      # Repository documentation & reproducibility guide
+├── LICENSE                        # MIT License
+├── CITATION.cff                   # Academic citation metadata
+├── .gitignore                     # Repository exclusion rules
 │
-├── pipelines/                                 # Implementations of the 5 Anonymization Architectures
-│   ├── FAST V5/                               # Proposed Hardware-Adaptive ADAS Edge Pipeline
-│   ├── EgoBlur/                               # Meta AI EgoBlur Faster R-CNN Baseline
-│   ├── DashcamCleaner/                        # Open-Source YOLOv8 Vehicle/Face Baseline
-│   ├── Anonymizer/                            # FusionPortable / Understand.AI ONNX Baseline
-│   └── Generative Anonymizer/                 # Dual Generative Synthesis (LaMa + DeepPrivacy2)
+├── pipelines/                     # 5 Anonymization Pipelines & Evaluation Suite
+│   ├── FAST V5/                   # Proposed Hardware-Adaptive ADAS Edge Pipeline
+│   ├── EgoBlur/                   # Meta AI EgoBlur Baseline
+│   ├── DashcamCleaner/            # Open-Source YOLOv8 Baseline
+│   ├── Anonymizer/                # FusionPortable Baseline
+│   ├── Generative Anonymizer/     # Dual Generative Synthesis (LaMa + DeepPrivacy2)
+│   └── benchmark_suite/           # Evaluation scripts, math formulations & runner
 │
-├── benchmark_suite/                           # Automated Evaluation & Statistical Significance Suite
-│   ├── prepare_xanylabeling_gt.py             # Consensus candidate fusion generator
-│   ├── evaluate_xanylabeling_gt.py            # Greedy IoU matching & scipy.stats significance battery
-│   ├── generate_comparison_frames.py          # 10-frame high-resolution visual evidence collages
-│   ├── master_benchmark_runner.py             # Host hardware profiler & batch execution orchestrator
-│   └── math.md                                # Confidence intervals and statistical formulations
-│
-├── outputs/                                   # Empirical Results & Publication Artifacts
-│   ├── 10_Frame_Comparisons/                  # Visual multi-model comparison panels
-│   └── results_pendik_100/                    # Benchmark run outputs (100 real driving frames)
-│       ├── ORACLE_BENCHMARK_ANALYSIS.md       # Comprehensive evaluation report (Sections 1–6)
-│       ├── oracle_statistical_tests.csv       # Summary of all hypothesis tests (p-values & test statistics)
-│       ├── oracle_overall_summary.csv         # Aggregate confusion matrix & primary metrics
-│       ├── oracle_per_bin_metrics.csv         # Stratified metrics across PP4AV Bins 1–4
-│       └── charts/                            # Publication-grade figures (300 DPI)
-│
-└── X/                                         # Human Oracle Tooling & Custom Configurations
-    ├── README.md                              # Human labeling guidelines
-    └── launch_custom_xanylabeling.command     # Single-click application launcher
+├── outputs/                       # Empirical results, reports & publication charts
+└── X/                             # Human oracle annotation tooling (X-AnyLabeling)
 ```
 
 ---
@@ -77,34 +59,7 @@ To ensure fair benchmarking, each system was executed under its established oper
 
 ---
 
-## 4. Pre-Trained Model Weights (.pt / ONNX / Engines)
-
-To maintain a lightweight repository and comply with GitHub's strict 100 MB per-file threshold, heavy binary checkpoints (`*.pt`, `*.onnx`, `*.engine`) are excluded from direct Git tracking. Below is the full specification table for all checkpoints utilized across the five evaluated pipelines:
-
-| Pipeline | Checkpoint File | Format | File Size | Target Directory | Description |
-| :--- | :--- | :---: | :---: | :--- | :--- |
-| **FAST v5** | `plate_nano_192x320_best.pt` | PyTorch | 5.9 MB | `pipelines/FAST V5/weights/` | Ultra-fast single-stage plate detector (192x320) |
-| **FAST v5** | `yolo11m.pt` | PyTorch | 39.0 MB | `pipelines/FAST V5/weights/` | YOLO11 medium general context perception |
-| **FAST v5** | `yolov8m-face.pt` | PyTorch | 50.8 MB | `pipelines/FAST V5/weights/` | YOLOv8 medium face localization head |
-| **FAST v5** | `plate_nano_192x320_best.onnx` | ONNX | 12.0 MB | `pipelines/FAST V5/weights/` | Optimized ONNX export for edge runtime |
-| **FAST v5** | `yolov8m-face.onnx` | ONNX | 99.0 MB | `pipelines/FAST V5/weights/` | ONNX face inference engine |
-| **DashcamCleaner** | `720p_nano_v8.pt` | PyTorch | 6.0 MB | `pipelines/DashcamCleaner/dashcamcleaner/weights/` | Lightweight 720p vehicle/face detector |
-| **DashcamCleaner** | `720p_small_v8.pt` | PyTorch | 22.0 MB | `pipelines/DashcamCleaner/dashcamcleaner/weights/` | Small 720p balanced checkpoint |
-| **DashcamCleaner** | `720p_medium_v8.pt` | PyTorch | 50.0 MB | `pipelines/DashcamCleaner/dashcamcleaner/weights/` | Primary evaluated 720p medium checkpoint |
-| **DashcamCleaner** | `1080p_medium_v8.pt` | PyTorch | 50.0 MB | `pipelines/DashcamCleaner/dashcamcleaner/weights/` | High-resolution 1080p medium checkpoint |
-| **EgoBlur** | `ego_blur_face.jit` | TorchScript | 168.0 MB | `pipelines/EgoBlur/weights/` | Meta AI Faster R-CNN face model |
-| **EgoBlur** | `ego_blur_lp.jit` | TorchScript | 168.0 MB | `pipelines/EgoBlur/weights/` | Meta AI Faster R-CNN plate model |
-| **FusionPortable** | `face.onnx` | ONNX | 182.0 MB | `pipelines/Anonymizer/weights/` | Understand.AI multi-scale face detector |
-| **FusionPortable** | `plate.onnx` | ONNX | 182.0 MB | `pipelines/Anonymizer/weights/` | Understand.AI multi-scale plate detector |
-| **Generative** | `big-lama.pt` | PyTorch | 196.0 MB | `pipelines/Generative Anonymizer/weights/` | Fast Fourier Inpainting model (LaMa) |
-| **Generative** | `WIDERFace_DSFD_RES152.pth` | PyTorch | 459.0 MB | `pipelines/Generative Anonymizer/deep_privacy2/weights/` | Dual-stage generative face localization |
-
-> **GitHub File Size Management:**  
-> GitHub strictly rejects pushes containing individual files larger than 100 MB (such as `big-lama.pt` at 196 MB, `face.onnx` at 182 MB, and `WIDERFace_DSFD_RES152.pth` at 459 MB). To run all pipelines locally, download pre-trained checkpoints into their respective `weights/` directories as indicated above.
-
----
-
-## 5. Hardware Telemetry & Profiling Protocol
+## 4. Hardware Telemetry & Profiling Protocol
 
 Host-device resource utilization is measured using an integrated profiler (`unified_telemetry_profiler.py`):
 
@@ -115,7 +70,7 @@ Host-device resource utilization is measured using an integrated profiler (`unif
 
 ---
 
-## 6. Human Oracle Ground-Truth Methodology
+## 5. Human Oracle Ground-Truth Methodology
 
 Ground truth evaluation avoids single-detector bias through a two-stage hybrid protocol:
 
@@ -126,7 +81,7 @@ Ground truth evaluation avoids single-detector bias through a two-stage hybrid p
 
 ---
 
-## 7. Automated Evaluation & Statistical Battery (`evaluate_xanylabeling_gt.py`)
+## 6. Automated Evaluation & Statistical Battery (`evaluate_xanylabeling_gt.py`)
 
 The evaluation script carries out deterministic matching and statistical verification:
 
@@ -144,7 +99,7 @@ The evaluation script carries out deterministic matching and statistical verific
 
 ---
 
-## 8. Key Results Summary
+## 7. Key Results Summary
 
 > [!NOTE]
 > **Pilot Study Notice:** The quantitative benchmarks reported below represent the 10-frame high-density Human Oracle Audit (56 confirmed Ground Truth targets, 102 total evaluated regions across 5 pipelines) conducted to rigorously validate the evaluation battery and establish statistical significance. Full-scale large-scale benchmark results across 7,200 driving frames will be released upon manuscript publication.
@@ -165,25 +120,25 @@ The evaluation script carries out deterministic matching and statistical verific
 
 ---
 
-## 9. Reproducibility Workflow
+## 8. Reproducibility Workflow
 
 ```bash
 # 1. Run multi-model consensus fusion to generate candidate labels
-python3 benchmark_suite/prepare_xanylabeling_gt.py
+python3 pipelines/benchmark_suite/prepare_xanylabeling_gt.py
 
 # 2. Execute automated evaluation and statistical significance battery on audited GT
-python3 benchmark_suite/evaluate_xanylabeling_gt.py \
+python3 pipelines/benchmark_suite/evaluate_xanylabeling_gt.py \
     --gt-dir "outputs/V.2" \
     --results-dir "outputs/results_pendik_100" \
     --iou-thresh 0.50
 
 # 3. Generate high-resolution visual comparison collages
-python3 benchmark_suite/generate_comparison_frames.py
+python3 pipelines/benchmark_suite/generate_comparison_frames.py
 ```
 
 ---
 
-## 10. Citation & Contact
+## 9. Citation & Contact
 
 If you use this benchmark suite, evaluation protocol, or dataset annotations in your research, please cite:
 

@@ -49,6 +49,9 @@ models/
 outputs/V.1/
 outputs/V.2/
 outputs/v.3/
+outputs/V.3*/
+outputs/v.3*/
+"outputs/V.3 test/"
 outputs/xanylabeling_review/
 outputs/10_Frame_Comparisons/
 outputs/results_pendik_100/blurred/
