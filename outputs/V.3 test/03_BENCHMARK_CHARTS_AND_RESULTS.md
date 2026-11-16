@@ -63,33 +63,7 @@ Profiles host RAM and GPU VRAM consumption. Generative inpainting exhausts over 
 
 ---
 
-## 3. Statistical Significance Testing Battery
-
-To prove to Q1 peer reviewers that differences between the 5 models are statistically significant and not an artifact of random sampling, automated hypothesis testing was conducted across the evaluated per-frame arrays:
-
-### 3.1 Normality Testing (Shapiro-Wilk Test)
-- **FAST v5:** $W = 0.812, \quad p = 0.018$ ($p < 0.05$)
-- **Meta EgoBlur:** $W = 0.746, \quad p = 0.003$ ($p < 0.05$)
-- **FusionPortable:** $W = 0.835, \quad p = 0.039$ ($p < 0.05$)
-- **Statistical Conclusion:** Per-frame error distributions significantly deviate from Gaussian normality ($p < 0.05$), formally invalidating parametric ANOVA and mandating non-parametric statistical methods.
-
-### 3.2 Omnibus Repeated-Measures ANOVA (Friedman Test)
-- **Friedman $\chi^2$ Statistic:** $\chi^2 = 20.895$
-- **Degrees of Freedom ($df$):** $4$
-- **$p$-Value:** $\mathbf{0.000332} \ (< 0.001)$
-- **Statistical Conclusion:** The 5 anonymization systems exhibit fundamentally distinct rank performance distributions at a $>99.9\%$ confidence level.
-
-### 3.3 Post-Hoc Pairwise Tests (Wilcoxon Signed-Rank Test vs. Proposed FAST v5)
-| Baseline Comparison | Test Statistic ($W$) | $p$-Value | Significance Level | Statistical Conclusion |
-| :--- | :---: | :---: | :---: | :--- |
-| **FAST v5 vs. Meta EgoBlur** | $W = 0.0$ | $\mathbf{0.0156}$ | $p < 0.05$ | **Statistically Significant Superiority** |
-| **FAST v5 vs. DashcamCleaner** | $W = 2.0$ | $\mathbf{0.0312}$ | $p < 0.05$ | **Statistically Significant Superiority** |
-| **FAST v5 vs. Generative Inpaint** | $W = 1.0$ | $\mathbf{0.0214}$ | $p < 0.05$ | **Statistically Significant Superiority** |
-| **FAST v5 vs. FusionPortable** | $W = 5.0$ | $\mathbf{0.0078}$ | $p < 0.01$ | **Statistically Significant Over-blur Reduction** |
-
----
-
-## 4. Complete 10-Frame Comparison Archive
+## 3. Complete 10-Frame Comparison Archive
 
 All 10 audited full-resolution 6-panel comparison frames are archived in:  
 📁 [`./10_Frame_Comparisons/`](./10_Frame_Comparisons/)
