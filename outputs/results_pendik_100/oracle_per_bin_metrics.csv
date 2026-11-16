@@ -1,20 +1,20 @@
 Distance_Bin,System_ID,System_Name,Privacy_Leak_Rate_%,Recall_%
-Bin 1 (Far >20m / <16px),1_FAST_V5,Proposed FAST v5,24.32,75.68
+Bin 1 (Far >20m / <16px),1_FAST_V5,FAST v5,24.32,75.68
 Bin 1 (Far >20m / <16px),2_EgoBlur,Meta AI EgoBlur,89.19,10.81
 Bin 1 (Far >20m / <16px),3_DashcamCleaner,DashcamCleaner,56.76,43.24
 Bin 1 (Far >20m / <16px),4_FusionPortable,FusionPortable,21.62,78.38
 Bin 1 (Far >20m / <16px),5_Generative_Anonymizer,Generative Inpaint,83.78,16.22
-Bin 2 (Mid 10-20m / 16-32px),1_FAST_V5,Proposed FAST v5,21.05,78.95
+Bin 2 (Mid 10-20m / 16-32px),1_FAST_V5,FAST v5,21.05,78.95
 Bin 2 (Mid 10-20m / 16-32px),2_EgoBlur,Meta AI EgoBlur,73.68,26.32
 Bin 2 (Mid 10-20m / 16-32px),3_DashcamCleaner,DashcamCleaner,36.84,63.16
 Bin 2 (Mid 10-20m / 16-32px),4_FusionPortable,FusionPortable,15.79,84.21
 Bin 2 (Mid 10-20m / 16-32px),5_Generative_Anonymizer,Generative Inpaint,63.16,36.84
-Bin 3 (Near 5-10m / 32-64px),1_FAST_V5,Proposed FAST v5,8.00,92.00
+Bin 3 (Near 5-10m / 32-64px),1_FAST_V5,FAST v5,8.00,92.00
 Bin 3 (Near 5-10m / 32-64px),2_EgoBlur,Meta AI EgoBlur,20.00,80.00
 Bin 3 (Near 5-10m / 32-64px),3_DashcamCleaner,DashcamCleaner,12.50,87.50
 Bin 3 (Near 5-10m / 32-64px),4_FusionPortable,FusionPortable,6.00,94.00
 Bin 3 (Near 5-10m / 32-64px),5_Generative_Anonymizer,Generative Inpaint,25.00,75.00
-Bin 4 (Close <5m / >64px),1_FAST_V5,Proposed FAST v5,2.50,97.50
+Bin 4 (Close <5m / >64px),1_FAST_V5,FAST v5,2.50,97.50
 Bin 4 (Close <5m / >64px),2_EgoBlur,Meta AI EgoBlur,5.00,95.00
 Bin 4 (Close <5m / >64px),3_DashcamCleaner,DashcamCleaner,4.00,96.00
 Bin 4 (Close <5m / >64px),4_FusionPortable,FusionPortable,2.00,98.00
