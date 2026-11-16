@@ -2,6 +2,9 @@
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#)
 [![Status: Benchmarked](https://img.shields.io/badge/Status-Benchmarked-brightgreen.svg)](#)
+[![Pipelines](https://img.shields.io/badge/Pipelines-5%20Architectures-8A2BE2.svg)](#)
+[![Ground Truth](https://img.shields.io/badge/Ground%20Truth-Human--in--the--Loop%20(HIM)-blueviolet.svg)](#)
+[![Edge Telemetry](https://img.shields.io/badge/Telemetry-Latency%20%7C%20FPS%20%7C%20RAM-teal.svg)](#)
 [![Evaluation IoU >= 0.50](https://img.shields.io/badge/IoU%20Matching-%E2%89%A5%200.50-brightgreen.svg)](#)
 [![PP4AV Standard](https://img.shields.io/badge/Filtering-PP4AV%20Thresholds-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -204,8 +207,8 @@ If you use this benchmark suite, evaluation protocol, or dataset annotations in 
 ```bibtex
 @article{anonbench2026,
   title={AnonBench: Empirical Benchmarking of Anonymization Failure Patterns in Real and Simulated Autonomous Driving Data},
-  author={Yasin, Awab and Collaborators},
-  journal={IEEE Transactions on Intelligent Transportation Systems},
+  author={  },
+  journal={  },
   year={2026}
 }
 ```
