@@ -7,7 +7,7 @@ authors:
     given-names: ""
 version: 1.0.0
 date-released: 2026-11-16
-license: MIT
+license: "LicenseRef-Custom"
 keywords:
   - autonomous-driving
   - privacy-anonymization
