@@ -24,73 +24,48 @@ All evaluations are conducted under greedy bipartite matching with IoU threshold
 ### Chart 1: Privacy Leak Rate vs. Over-Blur Rate
 [![Privacy Leak Rate vs Over-blur](./benchmark_charts/chart_oracle_privacy_leak_vs_overblur.png)](./benchmark_charts/chart_oracle_privacy_leak_vs_overblur.png)
 
-* **Axes:** X = 5 Pipelines | Y = Error Rate (%) *(Lower is better)*.
-  * 🟥 **Solid Red Line (Privacy Leak Rate):** Unblurred private faces and license plates.
-  * 🟪 **Dashed Purple Line (Over-Blur Rate):** Spurious blur placed on non-private background scenery.
-* **Comparative Analysis:**
-  * **Meta AI EgoBlur:** Prioritizes context preservation (25.0% over-blur) via conservative thresholds, resulting in high privacy leakage (83.9% missed targets).
-  * **FusionPortable:** Minimizes privacy leakage (19.6%) through dense candidate generation, causing severe background degradation (66.9% over-blur).
-  * **FAST v5:** Establishes a balanced Pareto trade-off, maintaining low privacy leakage (23.2%) alongside restrained scene over-blur (27.1%).
-* **Scientific Takeaway:** Visual anonymization presents a fundamental trade-off; uncalibrated thresholding either exposes biometric identities or degrades downstream autonomous perception.
+> **Key Finding:** Meta EgoBlur misses 83.9% of targets; FusionPortable over-blurs 66.9% of the scene; FAST v5 achieves a balanced Pareto trade-off (23.2% leak, 27.1% over-blur).  
+> **Takeaway:** Demonstrates the trade-off between biometric privacy protection and drivable scene preservation.
 
 ---
 
 ### Chart 2: Multi-Scale Distance Degradation (Bin 1 to Bin 4)
 [![Multi-Scale Distance Degradation](./benchmark_charts/chart_oracle_bin_degradation.png)](./benchmark_charts/chart_oracle_bin_degradation.png)
 
-* **Axes:** X = Target Distance (Far >20m to Close <5m) | Y = Privacy Leak Rate (%) *(Lower is better)*.
-* **Comparative Analysis:**
-  * **Near-Field Concordance (<5m):** All pipelines operate reliably at close range (leak rate <10%), where biometric spatial resolution is high (>64px).
-  * **Distant Perception Collapse (>20m):** Single-scale baselines exhibit catastrophic distance collapse (Meta AI EgoBlur: 89.2% leak; Generative Inpaint: 83.8% leak) due to conservative anchor scale thresholds.
-  * **Multi-Scale Anchor Resilience:** FAST v5 maintains consistent detection across all depth intervals, bounding leak rates to 24.3% at long range (>20m) and 2.5% at close range (<5m).
-* **Scientific Takeaway:** Distance is the primary driver of automotive anonymization failure; models lacking multi-scale adaptive anchors suffer perception collapse beyond 10 meters.
+> **Key Finding:** Beyond 20m, standard models collapse completely (EgoBlur: 89.2% leak; Generative: 83.8% leak), whereas FAST v5 maintains 24.3% leak down to 2.5% at close range via multi-scale anchors.  
+> **Takeaway:** Target distance is the primary driver of anonymization failure; single-scale models suffer severe perception collapse beyond 10 meters.
 
 ---
 
 ### Chart 3: Precision, Recall, and Balanced $F_1$-Score
 [![Precision Recall and F1 Score](./benchmark_charts/chart_oracle_precision_recall_f1.png)](./benchmark_charts/chart_oracle_precision_recall_f1.png)
 
-* **Axes:** X = 5 Pipelines | Y = Performance Score (%) *(Higher is better)*.
-  * 🟩 **Recall:** Privacy coverage | 🟦 **Precision:** Target exactness | 🟧 **$F_1$-Score:** Harmonic mean.
-* **Comparative Analysis:**
-  * **Meta AI EgoBlur:** Displays high precision (75.0%) but severely compromised recall (16.1%, $F_1 = 0.2647$), capturing only prominent frontal subjects.
-  * **FusionPortable:** Maximizes raw recall (80.4%) at the expense of precision (33.1%, $F_1 = 0.4688$) due to unconstrained candidate cascades.
-  * **FAST v5:** Achieves balanced operational performance across both metrics (76.8% recall, 72.9% precision), yielding an $F_1$-score of 0.7478.
-* **Scientific Takeaway:** Asymmetric metric optimization is insufficient for autonomous driving; reliable deployment demands joint optimization of precision and recall.
+> **Key Finding:** Meta EgoBlur captures only prominent targets (16.1% recall, $F_1 = 0.2647$); FusionPortable creates dense false alarms (33.1% precision, $F_1 = 0.4688$); FAST v5 achieves balanced utility (76.8% recall, 72.9% precision, $F_1 = 0.7478$).  
+> **Takeaway:** Asymmetric metric optimization fails; automotive deployment demands joint optimization of precision and recall.
 
 ---
 
 ### Chart 4: Edge Processing Speed (FPS & Seconds per Frame)
 [![Throughput FPS](./benchmark_charts/chart_throughput_fps.png)](./benchmark_charts/chart_throughput_fps.png)
 
-* **Axes:** X = 5 Pipelines | Y = Processing Speed in FPS [Log Scale] *(Higher is faster)*.
-* **Comparative Analysis:**
-  * **Lightweight Architectures:** Generative Inpaint (1.03 FPS / 0.95s), FAST v5 (0.71 FPS / 1.41s), and DashcamCleaner (0.71 FPS / 1.41s) execute efficiently in pure Python, scaling to real-time (>30 FPS) under TensorRT compilation.
-  * **Multi-Stage Latency Bottlenecks:** Heavy cascaded networks (FusionPortable at 0.13 FPS / 7.45s) and dual-branch feature pyramids (Meta AI EgoBlur at 0.10 FPS / 10.34s) exhibit excessive per-frame computational overhead.
-* **Scientific Takeaway:** Two-stage feature pyramids and cascaded ensembles introduce structural compute bottlenecks that preclude in-vehicle real-time execution.
+> **Key Finding:** Single-stage models (Generative: 1.03 FPS / 0.95s; FAST v5: 0.71 FPS / 1.41s; DashcamCleaner: 0.71 FPS / 1.41s) run in near real-time, while cascaded models (FusionPortable: 7.45s; EgoBlur: 10.34s) introduce severe processing bottlenecks.  
+> **Takeaway:** Heavy two-stage and cascaded architectures introduce compute overhead that precludes in-vehicle real-time execution.
 
 ---
 
 ### Chart 5: End-to-End Latency Breakdown (Median vs. P95 Worst-Case Delay)
 [![Latency Summary](./benchmark_charts/chart_latency_summary.png)](./benchmark_charts/chart_latency_summary.png)
 
-* **Axes:** X = 5 Pipelines | Y = Latency in Seconds & Milliseconds [Log Scale] *(Lower is faster)*.
-  * 🟩 **Median Latency (Typical)** | 🟥 **$P_{95}$ Worst-Case Latency (Crowded Urban Scenes)**.
-* **Comparative Analysis:**
-  * **Sub-Second Execution:** FAST v5 delivers sub-second typical latency (0.92s / 918 ms), with stable $P_{95}$ upper bounds (2.68s / 2,683 ms) during crowded street scenes.
-  * **Execution Variance:** DashcamCleaner maintains tight variance (1.36s median vs. 1.50s $P_{95}$), whereas Meta AI EgoBlur introduces severe delays (10.25s median, 10.98s $P_{95}$).
-* **Scientific Takeaway:** Automotive safety compliance requires predictable worst-case latency bounds ($P_{95}$); pipelines exceeding 5 seconds per frame induce dangerous perception lag.
+> **Key Finding:** FAST v5 delivers sub-second typical latency (0.92s / 918 ms) with predictable $P_{95}$ bounds (2.68s); Meta EgoBlur requires over 10.2s per frame regardless of scene complexity.  
+> **Takeaway:** Safety compliance requires predictable latency bounds ($P_{95}$) to prevent hazardous situational perception lag.
 
 ---
 
 ### Chart 6: Peak Memory & VRAM Allocation
 [![Memory and VRAM Allocation](./benchmark_charts/chart_memory_vram.png)](./benchmark_charts/chart_memory_vram.png)
 
-* **Axes:** X = 5 Pipelines | Y = Peak RAM/VRAM Allocation in Megabytes (MB) *(Lower is better)*.
-* **Comparative Analysis:**
-  * **Embedded Budget Compliance:** FAST v5 (1,986.5 MB), Meta AI EgoBlur (2,283.9 MB), and DashcamCleaner (2,377.6 MB) operate within manageable memory envelopes on development platforms.
-  * **Memory Exhaustion Hazard:** FusionPortable consumes 5,117.9 MB (>5.1 GB) due to simultaneous loading of multiple model weights, exceeding edge memory envelopes.
-* **Scientific Takeaway:** In-vehicle computing systems operate with shared RAM/VRAM pools; visual anonymizers must maintain compact footprints to avoid starving concurrent autonomous driving stacks.
+> **Key Finding:** FAST v5 maintains the lowest memory footprint (1,986.5 MB), operating safely within embedded hardware limits, while FusionPortable consumes 5,117.9 MB (>5.1 GB) due to concurrent model loading.  
+> **Takeaway:** Visual anonymizers must maintain compact memory footprints to avoid starving concurrent autonomous driving and navigation stacks.
 
 ---
 
