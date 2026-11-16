@@ -28,9 +28,9 @@ All evaluations are conducted under greedy bipartite matching with IoU threshold
   * 🟥 **Solid Red Line (Privacy Leak Rate):** Percentage of missed people and license plates left unblurred.
   * 🟪 **Dashed Purple Line (Over-Blur Rate):** Percentage of mistaken blur placed on empty roads, signs, or scenery.
 * **Main Findings:**
-  * **Meta EgoBlur:** Low over-blur (**25.0%**), but misses most targets (**83.9%** leak).
-  * **FusionPortable:** Low leaks (**19.6%**), but heavily destroys driving visibility (**66.9%** over-blur).
-  * **FAST v5:** Best balanced trade-off (**23.2%** leak, **27.1%** over-blur).
+  * 🟢 <span style="color:#15803d">**Best Balanced System:**</span> **FAST v5** — Optimal Pareto trade-off (**23.2%** leak, **27.1%** over-blur).
+  * 🔴 <span style="color:#b91c1c">**Worst Privacy Leak:**</span> **Meta AI EgoBlur** — Critical privacy failure (**83.9%** leak; missed 47 of 56 targets).
+  * 🔴 <span style="color:#b91c1c">**Worst Scene Destruction:**</span> **FusionPortable** — Excessive false blurring (**66.9%** over-blur), blinding driving perception.
 * **Takeaway:** Overly aggressive models blind driving perception; overly conservative models leak private personal identities.
 
 ---
@@ -40,9 +40,8 @@ All evaluations are conducted under greedy bipartite matching with IoU threshold
 
 * **Axes:** X = Target Distance (Far >20m to Close <5m) | Y = Privacy Leak Rate (%) *(Lower is better)*.
 * **Main Findings:**
-  * **Near Field (<5m):** All pipelines succeed (leak <10%) because faces and plates appear large on the sensor.
-  * **Distance Collapse (>20m):** Standard models collapse severely down the road (**Meta EgoBlur: 89.2%** leak; **Generative Inpaint: 83.8%** leak).
-  * **Multi-Scale Resilience:** **FAST v5** maintains stable protection across all distances (**24.3%** at Far >20m down to **2.5%** at Close <5m).
+  * 🟢 <span style="color:#15803d">**Best Distance Resilience:**</span> **FAST v5** — Resilient across all scales (**24.3%** at Far >20m down to **2.5%** at Close <5m).
+  * 🔴 <span style="color:#b91c1c">**Worst Distance Collapse:**</span> **Meta AI EgoBlur** (**89.2%** leak) and **Generative Inpaint** (**83.8%** leak) at Far range (>20m).
 * **Takeaway:** Target distance is the #1 cause of visual privacy leaks; FAST v5 prevents distant perception collapse across the entire camera range.
 
 ---
@@ -53,9 +52,9 @@ All evaluations are conducted under greedy bipartite matching with IoU threshold
 * **Axes:** X = 5 Pipelines | Y = Score (%) *(Higher is better)*.
   * 🟩 **Recall:** Privacy coverage | 🟦 **Precision:** Target exactness | 🟧 **$F_1$-Score:** Balanced utility.
 * **Main Findings:**
-  * **Meta EgoBlur:** High precision (**75.0%**) but very low recall (**16.1%**, $F_1 = 0.2647$).
-  * **FusionPortable:** High recall (**80.4%**) but very low precision (**33.1%**, $F_1 = 0.4688$).
-  * **FAST v5:** Strong balance on both metrics (**76.8%** recall, **72.9%** precision), achieving the highest overall score (**$F_1 = 0.7478$**).
+  * 🟢 <span style="color:#15803d">**Best Overall Performance:**</span> **FAST v5** — Highest balanced score (**$F_1 = 0.7478$**; **76.8%** recall, **72.9%** precision).
+  * 🔴 <span style="color:#b91c1c">**Worst Overall Utility:**</span> **Meta AI EgoBlur** — Low score (**$F_1 = 0.2647$**) due to failure in recall (**16.1%**).
+  * 🔴 <span style="color:#b91c1c">**Worst Target Exactness:**</span> **FusionPortable** — Low precision (**33.1%**, $F_1 = 0.4688$) due to unconstrained false alarms.
 * **Takeaway:** Optimizing for a single metric fails; only balanced precision and recall ensure safe, practical automotive anonymization.
 
 ---
@@ -65,10 +64,8 @@ All evaluations are conducted under greedy bipartite matching with IoU threshold
 
 * **Axes:** X = 5 Pipelines | Y = Processing Speed in FPS [Log Scale] *(Higher is faster)*.
 * **Main Findings:**
-  * **Generative Inpaint:** **1.03 FPS** (**0.95s** per frame in test mode).
-  * **FAST v5 & DashcamCleaner:** **0.71 FPS** (**1.41s** per frame in Python baseline; scales to **>30 FPS** with TensorRT).
-  * **FusionPortable:** **0.13 FPS** (**7.45s** per frame).
-  * **Meta AI EgoBlur:** **0.10 FPS** (**10.34s** per frame).
+  * 🟢 <span style="color:#15803d">**Best Edge Viability:**</span> **FAST v5 & DashcamCleaner** (**0.71 FPS**, **1.41s**/frame baseline; scales to **>30 FPS** with TensorRT) and **Generative Inpaint** (**1.03 FPS**, **0.95s**/frame in test mode).
+  * 🔴 <span style="color:#b91c1c">**Worst Speed Bottleneck:**</span> **Meta AI EgoBlur** (**0.10 FPS**, **10.34s**/frame) and **FusionPortable** (**0.13 FPS**, **7.45s**/frame), unviable for live driving feeds.
 * **Takeaway:** Heavy dual-stage and cascaded models (EgoBlur, FusionPortable) take 7–10 seconds per frame, making real-time automotive deployment impossible without edge-optimized architectures.
 
 ---
@@ -79,11 +76,8 @@ All evaluations are conducted under greedy bipartite matching with IoU threshold
 * **Axes:** X = 5 Pipelines | Y = Latency in Seconds and Milliseconds [Log Scale] *(Lower is faster)*.
   * 🟩 **Median Delay (Typical)** | 🟥 **P95 Worst-Case Delay (Crowded Scenes)**.
 * **Main Findings:**
-  * **Generative Inpaint:** **0.76s** (756 ms) median | **1.85s** (1,855 ms) worst-case.
-  * **FAST v5:** **0.92s** (918 ms) median | **2.68s** (2,683 ms) worst-case.
-  * **DashcamCleaner:** **1.36s** (1,361 ms) median | **1.50s** (1,499 ms) worst-case.
-  * **FusionPortable:** **7.45s** (7,446 ms) median | **8.19s** (8,189 ms) worst-case.
-  * **Meta AI EgoBlur:** **10.25s** (10,248 ms) median | **10.98s** (10,980 ms) worst-case.
+  * 🟢 <span style="color:#15803d">**Best Sub-Second Response:**</span> **Generative Inpaint** (**0.76s** median) and **FAST v5** (**0.92s** / 918 ms median under routine driving).
+  * 🔴 <span style="color:#b91c1c">**Worst Delay & Lag:**</span> **Meta AI EgoBlur** (**10.25s** median, **10.98s** P95 worst-case), creating hazardous processing delays.
 * **Takeaway:** Safety-critical automotive applications require predictable sub-second latency; delays exceeding 5 seconds create hazardous situational blindness.
 
 ---
@@ -93,11 +87,8 @@ All evaluations are conducted under greedy bipartite matching with IoU threshold
 
 * **Axes:** X = 5 Pipelines | Y = Peak RAM/VRAM Memory in Megabytes (MB) *(Lower is better)*.
 * **Main Findings:**
-  * **FAST v5:** **1,986.5 MB** *(Lowest peak memory demand among all evaluated pipelines)*.
-  * **Meta AI EgoBlur:** **2,283.9 MB**.
-  * **DashcamCleaner:** **2,377.6 MB**.
-  * **Generative Inpaint:** **2,401.4 MB**.
-  * **FusionPortable:** **5,117.9 MB** *(Exceeds embedded limits; loads multiple model weights simultaneously)*.
+  * 🟢 <span style="color:#15803d">**Best Memory Efficiency:**</span> **FAST v5** — Lowest footprint at **1,986.5 MB**, fitting comfortably within edge envelopes.
+  * 🔴 <span style="color:#b91c1c">**Worst Memory Hog:**</span> **FusionPortable** — Demands a massive **5,117.9 MB** (>5.1 GB), risking out-of-memory crashes on embedded hardware.
 * **Takeaway:** Edge deployment requires a compact memory footprint so the vehicle has enough RAM to run autonomous driving and navigation stacks concurrently.
 
 ---
