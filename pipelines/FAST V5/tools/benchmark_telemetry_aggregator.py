@@ -10,7 +10,7 @@ Master Runner & Telemetry Aggregator:
     telemetry across all 6 environmental driving conditions (Clear, Rain, Night, Fog, Glare, Overcast).
   - Produces:
       Table A: Ground-Truth Oracles Telemetry (SCRFD-34G & RT-DETR v2 - Detection + Box Saving ONLY)
-      Table B: Evaluated Anonymization Pipelines Telemetry (Proposed FAST, EgoBlur, DashcamCleaner,
+      Table B: Evaluated Anonymization Pipelines Telemetry (FAST v5, EgoBlur, DashcamCleaner,
                and FusionPortable - Read + Detect + Blur + Save Image End-to-End)
   - Exports clean CSV, JSON, and formatted Markdown reports ready for the research paper.
 

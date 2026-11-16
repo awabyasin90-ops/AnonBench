@@ -1,4 +1,4 @@
-# Requirements for Proposed Pipeline (FAST v5) — Dual TensorRT Engine
+# Requirements for FAST v5 Pipeline — Dual TensorRT Engine
 # Recommended Python: >=3.10
 
 # Core CPU / Standard Dependencies:

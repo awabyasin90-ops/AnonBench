@@ -1,4 +1,4 @@
-# FAST: Proposed Automotive Privacy Anonymization Pipeline
+# FAST v5: Real-Time Automotive Privacy Anonymization Pipeline
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Hardware](https://img.shields.io/badge/Hardware-NVIDIA%20GPU%20%7C%20CPU%20Fallback-green.svg)]()

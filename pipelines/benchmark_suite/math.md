@@ -176,7 +176,7 @@ where $K$ is the number of evaluated frames ($K = 10$), $J$ is the number of sys
 $$\text{Empirical result: } \chi_F^2 = 20.89, \quad p = 0.00034 \implies \text{Statistically significant difference across pipelines.}$$
 
 ### 7.3 Wilcoxon Signed-Rank Pairwise Test
-Performs paired rank comparisons between proposed FAST v5 and competing baselines:
+Performs paired rank comparisons between FAST v5 and competing baselines:
 
 $$W = \min(W^+, W^-), \quad W^+ = \sum_{d_i > 0} \text{Rank}(|d_i|), \quad d_i = x_{i, \text{baseline}} - x_{i, \text{FAST}}$$
 

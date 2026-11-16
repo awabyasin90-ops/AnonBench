@@ -24,7 +24,7 @@ import json
 from pathlib import Path
 
 NAME_ORDER = [
-    ("1_FAST_V5", "Proposed FAST v5"),
+    ("1_FAST_V5", "FAST v5"),
     ("3_DashcamCleaner", "DashcamCleaner"),
     ("2_EgoBlur", "Meta AI EgoBlur"),
     ("4_FusionPortable", "FusionPortable"),

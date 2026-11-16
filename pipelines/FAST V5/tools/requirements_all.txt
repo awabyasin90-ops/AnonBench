@@ -42,4 +42,4 @@ pytest>=7.0.0
 # For CUDA-accelerated inference, install onnxruntime-gpu matching your CUDA driver:
 #   CUDA 12.x: pip install onnxruntime-gpu>=1.16.0
 #   CUDA 11.x: pip install onnxruntime-gpu==1.14.0
-# For TensorRT engines (Proposed Pipeline), ensure TensorRT and pycuda/pynvml are installed.
+# For TensorRT engines (FAST v5 Pipeline), ensure TensorRT and pycuda/pynvml are installed.

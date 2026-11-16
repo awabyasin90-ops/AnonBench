@@ -43,7 +43,7 @@ SYSTEM_KEYS = [
 ]
 
 SYSTEM_DISPLAY_NAMES = {
-    "1_FAST_V5": "Proposed FAST v5",
+    "1_FAST_V5": "FAST v5",
     "2_EgoBlur": "Meta AI EgoBlur",
     "3_DashcamCleaner": "DashcamCleaner",
     "4_FusionPortable": "FusionPortable",

@@ -5,7 +5,7 @@ master_benchmark_runner.py
 Master End-to-End Benchmark Suite for 5 Automotive Privacy Anonymization Pipelines.
 
 Evaluates 5 Disparate Architectures:
-  1. Proposed FAST v5        (Real-Time ADAS Edge Pipeline)
+  1. FAST v5        (Real-Time ADAS Edge Pipeline)
   2. DashcamCleaner          (Single-Stage YOLOv8 Community Baseline)
   3. Meta AI EgoBlur Gen2    (Two-Stage Faster R-CNN Industry Baseline)
   4. FusionPortable          (Retrained Perspective Faster R-CNN ONNX)
@@ -233,7 +233,7 @@ def load_pipeline_runners(device="cpu"):
         return gen_pipeline.process_frame(img_bgr)
 
     return [
-        {"id": "1_FAST_V5", "name": "Proposed FAST v5", "folder": "1_FAST_V5", "runner": run_fast},
+        {"id": "1_FAST_V5", "name": "FAST v5", "folder": "1_FAST_V5", "runner": run_fast},
         {"id": "2_EgoBlur", "name": "Meta AI EgoBlur", "folder": "2_EgoBlur", "runner": run_egoblur},
         {"id": "3_DashcamCleaner", "name": "DashcamCleaner", "folder": "3_DashcamCleaner", "runner": run_dashcam},
         {"id": "4_FusionPortable", "name": "FusionPortable", "folder": "4_FusionPortable", "runner": run_fusionportable},

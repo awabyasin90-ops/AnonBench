@@ -170,7 +170,7 @@
       "check_command": "python3 -c \"import torch, ultralytics; print('Torch:', torch.__version__, 'Ultralytics RT-DETR ready')\""
     },
     "proposed_fast_v5": {
-      "display_name": "Proposed Pipeline (FAST v5) \u2014 Dual TensorRT Engine",
+      "display_name": "FAST v5 Pipeline \u2014 Dual TensorRT Engine",
       "category": "evaluated_pipeline",
       "pipeline_index": 1,
       "architecture": "Dual Face & Plate Detector in TensorRT (INT8 / FP16) + CUDA",
@@ -245,7 +245,7 @@
           "status": "already_present"
         }
       ],
-      "check_command": "python3 -c \"import torch, ultralytics; print('FAST v5 Proposed Pipeline dependencies ready.')\""
+      "check_command": "python3 -c \"import torch, ultralytics; print('FAST v5 FAST v5 Pipeline dependencies ready.')\""
     },
     "meta_egoblur": {
       "display_name": "Meta AI \u2014 EgoBlur (Industry Big-Tech Baseline)",

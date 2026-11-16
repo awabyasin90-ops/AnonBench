@@ -32,7 +32,7 @@ Visual anonymization in automated driving systems requires continuous privacy pr
 ├── .gitignore                     # Repository exclusion rules
 │
 ├── pipelines/                     # 5 Anonymization Pipelines & Evaluation Suite
-│   ├── FAST V5/                   # Proposed Hardware-Adaptive ADAS Edge Pipeline
+│   ├── FAST V5/                   # Hardware-Adaptive ADAS Edge Pipeline
 │   ├── EgoBlur/                   # Meta AI EgoBlur Baseline
 │   ├── DashcamCleaner/            # Open-Source YOLOv8 Baseline
 │   ├── Anonymizer/                # FusionPortable Baseline
@@ -51,7 +51,7 @@ To ensure fair benchmarking, each system was executed under its established oper
 
 | System ID | Pipeline Name | Architectural Paradigm | Detection Thresholds | Primary Characteristics |
 | :--- | :--- | :--- | :--- | :--- |
-| **`1_FAST_V5`** | **Proposed FAST v5** | Hardware-Adaptive Single-Stage | Face: `0.25`, Plate: `0.20` | Real-time edge ADAS engine; elliptical Gaussian feathering; low memory footprint. |
+| **`1_FAST_V5`** | **FAST v5** | Hardware-Adaptive Single-Stage | Face: `0.25`, Plate: `0.20` | Real-time edge ADAS engine; elliptical Gaussian feathering; low memory footprint. |
 | **`2_EgoBlur`** | **Meta AI EgoBlur** | Two-Stage Faster R-CNN | Face: `0.6742`, Plate: `0.7448` | Official conservative thresholds; high precision but drops small far-field targets. |
 | **`3_DashcamCleaner`** | **DashcamCleaner** | Single-Stage YOLOv8 Medium | General: `0.40` | Balanced community baseline; box kernel blurring (size 19). |
 | **`4_FusionPortable`** | **FusionPortable** | Multi-Scale Faster R-CNN ONNX | Face: `0.30`, Plate: `0.30` | High detection sensitivity; elevated false discovery rate and substantial memory footprint. |
@@ -107,7 +107,7 @@ The evaluation script carries out deterministic matching and statistical verific
 ### Confusion Matrix Across Reviewed Frames
 | Pipeline | GT Targets | Detections | True Pos. | False Neg. | False Pos. | Privacy Leak Rate | Over-blur Rate | Recall | Precision | F1-Score |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Proposed FAST v5** | 56 | 53 | **18** | 38 | 35 | **67.9%** | 66.0% | **32.1%** | 34.0% | **33.0** |
+| **FAST v5** | 56 | 53 | **18** | 38 | 35 | **67.9%** | 66.0% | **32.1%** | 34.0% | **33.0** |
 | **Meta AI EgoBlur** | 56 | 11 | **10** | 46 | 1 | **82.1%** | 9.1% | **17.9%** | 90.9% | **29.9** |
 | **DashcamCleaner** | 56 | 45 | **23** | 33 | 22 | **58.9%** | 48.9% | **41.1%** | 51.1% | **45.5** |
 | **FusionPortable** | 56 | 112 | **41** | 15 | 71 | **26.8%** | 63.4% | **73.2%** | 36.6% | **48.8** |

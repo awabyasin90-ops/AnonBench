@@ -38,7 +38,7 @@
 ### Performance Breakdown:
 | Pipeline Architecture | Detected (TP) 🟩 | Missed (FN) 🟥 | False+ (FP) 🟦 | Recall |
 | :--- | :---: | :---: | :---: | :---: |
-| **Proposed FAST v5** | **4** | **4** | **2** | **50.0%** |
+| **FAST v5** | **4** | **4** | **2** | **50.0%** |
 | **Meta AI EgoBlur** | 0 | 8 | 0 | 0.0% |
 | **DashcamCleaner** | 4 | 4 | 2 | 50.0% |
 | **FusionPortable** | 7 | 1 | 10 | 87.5% |

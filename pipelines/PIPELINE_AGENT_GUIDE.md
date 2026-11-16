@@ -15,7 +15,7 @@ A foundational tenet of this benchmark is that the **Ground Truth (GT)** is not 
 │                        STAGE 1: MULTI-SYSTEM CANDIDATE FUSION                          │
 │                                                                                        │
 │   All 5 Systems + 2 Reference Oracles Run at Low Threshold (≥ 0.15) to Maximize Recall │
-│   • Proposed FAST v5 (TensorRT ADAS Edge)        • DashcamCleaner (YOLOv8)             │
+│   • FAST v5 (TensorRT ADAS Edge)        • DashcamCleaner (YOLOv8)             │
 │   • Meta AI EgoBlur Gen2 (Faster R-CNN)          • FusionPortable (Faster R-CNN ONNX)  │
 │   • Generative Anonymizer (RetinaFace+WPOD)      • InsightFace SCRFD (Face Oracle)     │
 │   • RT-DETR v2 (Plate Oracle)                                                          │

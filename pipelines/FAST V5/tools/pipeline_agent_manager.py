@@ -4,7 +4,7 @@ pipeline_agent_manager.py
 =========================
 Autonomous AI Agent & Research Manager for Anonymization Failure Pattern Study:
 - 2 Ground-Truth Baselines (InsightFace SCRFD-34G & RT-DETR v2 Plate)
-- 4 Evaluated Anonymization Pipelines (Proposed FAST v5, Meta EgoBlur, DashcamCleaner, FusionPortable Anonymizer)
+- 4 Evaluated Anonymization Pipelines (FAST v5, Meta EgoBlur, DashcamCleaner, FusionPortable Anonymizer)
 - 1 Sensor Simulation Platform (Pioneer 3AT ROS)
 
 Features:
@@ -281,7 +281,7 @@ def export_requirements(manifest: Dict[str, Any]) -> None:
         f.write("# For CUDA-accelerated inference, install onnxruntime-gpu matching your CUDA driver:\n")
         f.write("#   CUDA 12.x: pip install onnxruntime-gpu>=1.16.0\n")
         f.write("#   CUDA 11.x: pip install onnxruntime-gpu==1.14.0\n")
-        f.write("# For TensorRT engines (Proposed Pipeline), ensure TensorRT and pycuda/pynvml are installed.\n")
+        f.write("# For TensorRT engines (FAST v5 Pipeline), ensure TensorRT and pycuda/pynvml are installed.\n")
     print(f"[+] Exported unified conflict-free {all_file.name}")
 
     # Export Desktop/GUI variant inside FAST/tools

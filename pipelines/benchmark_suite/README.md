@@ -3,7 +3,7 @@
 
 This directory contains the production-grade benchmark suite for evaluating the **5 vehicular privacy anonymization pipelines** across real driving datasets and CARLA simulations:
 
-1. **Proposed FAST v5** (Real-Time ADAS Edge TensorRT / PyTorch Pipeline)
+1. **FAST v5** (Real-Time ADAS Edge TensorRT / PyTorch Pipeline)
 2. **DashcamCleaner** (Single-Stage YOLOv8 Community Baseline)
 3. **Meta AI EgoBlur Gen2** (Two-Stage Industry TorchScript JIT Baseline)
 4. **FusionPortable** (Retrained Perspective Faster R-CNN ONNX Runtime Baseline)

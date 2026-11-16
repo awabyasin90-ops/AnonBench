@@ -8,7 +8,7 @@
 
 | System | Throughput (FPS) | Median Latency | P95 Latency | Peak RAM / VRAM |
 | :--- | :---: | :---: | :---: | :---: |
-| **Proposed FAST v5** | **0.71 FPS** | **917.7 ms** | **2683.2 ms** | **1986.5 MB** |
+| **FAST v5** | **0.71 FPS** | **917.7 ms** | **2683.2 ms** | **1986.5 MB** |
 | DashcamCleaner | 0.71 FPS | 1361.4 ms | 1499.1 ms | 2377.6 MB |
 | Meta AI EgoBlur | 0.10 FPS | 10248.4 ms | 10980.4 ms | 2283.9 MB |
 | FusionPortable | 0.13 FPS | 7446.0 ms | 8188.7 ms | 5117.9 MB |
@@ -34,7 +34,7 @@
 
 | System | Total Detections | Faces | Plates | Bin 1 (Far) | Bin 2 (Mid) | Bin 3 (Std) | Bin 4 (Close) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Proposed FAST v5** | **660** | 644 | 16 | 475 | 156 | 14 | **15** |
+| **FAST v5** | **660** | 644 | 16 | 475 | 156 | 14 | **15** |
 | DashcamCleaner | 682 | 602 | 80 | 27 | 417 | 208 | **30** |
 | Meta AI EgoBlur | 128 | 83 | 45 | 13 | 74 | 28 | **13** |
 | FusionPortable | 1576 | 1394 | 182 | 659 | 743 | 152 | **22** |

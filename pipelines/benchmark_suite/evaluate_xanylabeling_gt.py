@@ -54,7 +54,7 @@ import matplotlib.pyplot as plt
 
 
 SYSTEM_CONFIG = [
-    ("1_FAST_V5", "Proposed FAST v5", "#10B981"),              # Emerald Green
+    ("1_FAST_V5", "FAST v5", "#10B981"),              # Emerald Green
     ("2_EgoBlur", "Meta AI EgoBlur", "#EF4444"),              # Vibrant Red
     ("3_DashcamCleaner", "DashcamCleaner", "#F59E0B"),        # Amber Yellow
     ("4_FusionPortable", "FusionPortable", "#8B5CF6"),        # Purple
@@ -704,7 +704,7 @@ def compute_statistical_tests(
         )
         add_record(
             "Wilcoxon Signed-Rank (Post-Hoc)",
-            f"Proposed FAST v5 vs {s_name}",
+            f"FAST v5 vs {s_name}",
             "Privacy Leak Rate (%)",
             "Paired Differences (N=10)",
             "W",
@@ -731,7 +731,7 @@ def compute_statistical_tests(
         )
         add_record(
             "Wilcoxon Signed-Rank (Post-Hoc)",
-            f"Proposed FAST v5 vs {s_name}",
+            f"FAST v5 vs {s_name}",
             "Over-blur Rate (%)",
             "Paired Differences (N=10)",
             "W",
@@ -890,7 +890,7 @@ def compute_statistical_tests(
         "---",
         "",
         "### 6.6 Edge Hardware & Compute Viability (ANOVA Telemetry Analysis)",
-        "- **Inference Latency ($F(4, 495) = 142.85, p < 10^{-15}$):** Proposed FAST v5 delivers a real-time edge median latency of 917.7 ms with 1,986.5 MB RAM, whereas Meta AI EgoBlur (10,248.4 ms) and FusionPortable (7,446.0 ms, 5,117.9 MB) exceed realistic automotive compute constraints.",
+        "- **Inference Latency ($F(4, 495) = 142.85, p < 10^{-15}$):** FAST v5 delivers a real-time edge median latency of 917.7 ms with 1,986.5 MB RAM, whereas Meta AI EgoBlur (10,248.4 ms) and FusionPortable (7,446.0 ms, 5,117.9 MB) exceed realistic automotive compute constraints.",
         "",
         "---",
         "",
@@ -900,13 +900,13 @@ def compute_statistical_tests(
         "> *\"To ensure that observed performance variations across anonymization architectures and environmental strata reflect true systemic behaviors rather than sampling noise, a rigorous statistical hypothesis testing protocol was integrated into the automated evaluation engine. First, we assessed the distributional normality of per-frame privacy leak rates and over-blur rates using the Shapiro-Wilk test. Because failure rates across spatial bins exhibited significant departures from normality ($W = 0.8947, p = 3.23 \\times 10^{-4} < 0.05$), non-parametric statistical tests were mandated. To evaluate overall differences among the five pipelines evaluated on the exact same paired frames, we applied the omnibus Friedman test ($\\alpha = 0.05$, $\\text{df} = 4$), followed by pairwise post-hoc Wilcoxon signed-rank tests with Bonferroni correction ($\\alpha_{\\text{adjusted}} = 0.0125$). Conversely, to evaluate performance degradation across independent environmental conditions and pixel-scale distance strata (PP4AV Bins 1–4), we employed the non-parametric Kruskal-Wallis $H$-test followed by post-hoc pairwise comparisons. For hardware energy and latency telemetry satisfying normality assumptions, parametric ANOVA was utilized.\"*",
         "",
         "#### B. Results — Section 4.1: Comparative Anonymization Performance",
-        f"> *\"A Friedman test conducted across the audited frames confirmed a highly significant difference in Privacy Leak Rates among the five evaluated pipelines ($\\chi^2(4) = {f_leak_stat:.4f}, p = {format_p_val(f_leak_p)} < 0.001$) and Over-blur Rates ($\\chi^2(4) = {f_ob_stat:.4f}, p = {format_p_val(f_ob_p)} < 0.01$). Post-hoc pairwise Wilcoxon signed-rank tests with Bonferroni correction demonstrated that our proposed FAST v5 achieves a calibrated operating trade-off, avoiding the catastrophic privacy leaks observed in commercial off-the-shelf detectors like Meta AI EgoBlur (82.1% leak rate, dropping small distant pedestrian faces) and Generative Inpaint (87.5% leak rate, $W = 0.0, p = 0.0156$). Furthermore, while FusionPortable achieved a lower aggregate leak rate (26.8%), pairwise testing on Over-blur Rates confirmed that FusionPortable introduced severe background destruction (63.4% false discovery rate, 71 false positives) alongside a prohibitive 5,117.9 MB memory footprint and an unviable 0.13 FPS throughput.\"*",
+        f"> *\"A Friedman test conducted across the audited frames confirmed a highly significant difference in Privacy Leak Rates among the five evaluated pipelines ($\\chi^2(4) = {f_leak_stat:.4f}, p = {format_p_val(f_leak_p)} < 0.001$) and Over-blur Rates ($\\chi^2(4) = {f_ob_stat:.4f}, p = {format_p_val(f_ob_p)} < 0.01$). Post-hoc pairwise Wilcoxon signed-rank tests with Bonferroni correction demonstrated that FAST v5 achieves a calibrated operating trade-off, avoiding the catastrophic privacy leaks observed in commercial off-the-shelf detectors like Meta AI EgoBlur (82.1% leak rate, dropping small distant pedestrian faces) and Generative Inpaint (87.5% leak rate, $W = 0.0, p = 0.0156$). Furthermore, while FusionPortable achieved a lower aggregate leak rate (26.8%), pairwise testing on Over-blur Rates confirmed that FusionPortable introduced severe background destruction (63.4% false discovery rate, 71 false positives) alongside a prohibitive 5,117.9 MB memory footprint and an unviable 0.13 FPS throughput.\"*",
         "",
         "#### C. Results — Section 4.2: Multi-Scale Distance Degradation",
         f"> *\"To quantify the impact of target scale on privacy preservation, a Kruskal-Wallis test across the PP4AV distance strata revealed a statistically significant scale-dependent degradation across single-stage and two-stage detectors ($H(1) = {kw_stat:.4f}, p = {format_p_val(kw_p)} < 0.05$). Mann-Whitney pairwise analysis confirmed that transitioning from mid-range targets (Bin 2: 16–32 px, mean leak rate {b2_leak:.1f}%) to far-field horizon targets (Bin 1: <16 px, mean leak rate {b1_leak:.1f}%) induces a statistically significant collapse in detection coverage ($U = {u_val:.1f}, p = {format_p_val(u_p_val)} < 0.05$). Across commercial baselines, Meta AI EgoBlur and Generative Inpaint suffered an acute 89.2% privacy leak rate in Bin 1 (<16 px).\"*",
         "",
         "#### D. Results — Section 4.3: Edge Telemetry & Hardware Viability",
-        "> *\"Analysis of compute resource telemetry revealed statistically distinct operating regimes across architectures ($F(4, 495) = 142.85, p < 10^{-15}$). Proposed FAST v5 achieved an edge-viable median latency of 917.7 ms with a compact 1,986.5 MB memory footprint, whereas Meta AI EgoBlur (10,248.4 ms) and FusionPortable (7,446.0 ms, 5,117.9 MB) exceed realistic automotive onboard compute budgets by nearly an order of magnitude.\"*"
+        "> *\"Analysis of compute resource telemetry revealed statistically distinct operating regimes across architectures ($F(4, 495) = 142.85, p < 10^{-15}$). FAST v5 achieved an edge-viable median latency of 917.7 ms with a compact 1,986.5 MB memory footprint, whereas Meta AI EgoBlur (10,248.4 ms) and FusionPortable (7,446.0 ms, 5,117.9 MB) exceed realistic automotive onboard compute budgets by nearly an order of magnitude.\"*"
     ])
 
     return test_records, sec6

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-run_fast_telemetry.py — Proposed Pipeline (FAST v5) Unified Telemetry Runner
+run_fast_telemetry.py — FAST v5 Pipeline Unified Telemetry Runner
 ================================================================================
 Empirical Research Project:
 "Anonymization Failure Patterns Across Real Drives and CARLA Simulation"
@@ -73,7 +73,7 @@ def main():
 
     # Initialize Unified Telemetry Profiler
     with UnifiedTelemetryProfiler(
-        pipeline_name="Proposed-FAST-v5",
+        pipeline_name="FAST-v5",
         condition=args.condition,
         warmup_frames=args.warmup,
         extra_metadata={"config": str(args.config)}
