@@ -9,13 +9,13 @@ This report consolidates the complete quantitative results, edge hardware teleme
 
 All evaluations are conducted under greedy bipartite matching with IoU threshold $\tau_{\text{iou}} = 0.50$ against the **Human-in-the-Loop (HIM / V.2)** Ground Truth reference (56 confirmed targets across the drive).
 
-| Pipeline System | Confirmed GT | TP 🟩 | FN (Leak) 🟥 | FP (Over-blur) 🟦 | Privacy Leak Rate (%) $\downarrow$ | Over-blur Rate (%) $\downarrow$ | Precision (%) $\uparrow$ | Recall (%) $\uparrow$ | $F_1$-Score $\uparrow$ |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Proposed FAST v5** | 56 | **43** | **13** | 16 | **23.21%** | 27.12% | **72.88%** | **76.79%** | **0.7478** |
-| **Meta AI EgoBlur** | 56 | 9 | 47 | **3** | 83.93% | **25.00%** | 75.00% | 16.07% | 0.2647 |
-| **DashcamCleaner** | 56 | 28 | 28 | 15 | 50.00% | 34.88% | 65.12% | 50.00% | 0.5657 |
-| **FusionPortable** | 56 | 45 | 11 | 91 | 19.64% | 66.91% | 33.09% | 80.36% | 0.4688 |
-| **Generative Inpaint**| 56 | 13 | 43 | 9 | 76.79% | 40.91% | 59.09% | 23.21% | 0.3333 |
+| Pipeline System | Privacy Leak Rate (%) $\downarrow$ | Over-blur Rate (%) $\downarrow$ | Precision (%) $\uparrow$ | Recall (%) $\uparrow$ | $F_1$-Score $\uparrow$ |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Proposed FAST v5** | **23.21%** | 27.12% | **72.88%** | **76.79%** | **0.7478** |
+| **Meta AI EgoBlur** | 83.93% | **25.00%** | 75.00% | 16.07% | 0.2647 |
+| **DashcamCleaner** | 50.00% | 34.88% | 65.12% | 50.00% | 0.5657 |
+| **FusionPortable** | 19.64% | 66.91% | 33.09% | 80.36% | 0.4688 |
+| **Generative Inpaint** | 76.79% | 40.91% | 59.09% | 23.21% | 0.3333 |
 
 ---
 
