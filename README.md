@@ -4,7 +4,6 @@
 [![Status: Benchmarked](https://img.shields.io/badge/Status-Benchmarked-brightgreen.svg)](#)
 [![Evaluation IoU >= 0.50](https://img.shields.io/badge/IoU%20Matching-%E2%89%A5%200.50-brightgreen.svg)](#)
 [![PP4AV Standard](https://img.shields.io/badge/Filtering-PP4AV%20Thresholds-orange.svg)](#)
-[![Companion Repo](https://img.shields.io/badge/Companion%20Repo-FAST--Edge--Anonymization-purple.svg)](https://github.com/awabyasin90-ops/FAST-Edge-Anonymization)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > **Official benchmark suite for evaluating visual anonymization failure patterns in autonomous driving across 5 pipelines, hardware telemetry, and a customized Human-in-the-Loop annotation engine X-AnyLabeling.**
