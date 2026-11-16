@@ -5,7 +5,7 @@
 [![Evaluation IoU >= 0.50](https://img.shields.io/badge/IoU%20Matching-%E2%89%A5%200.50-brightgreen.svg)](#)
 [![PP4AV Standard](https://img.shields.io/badge/Filtering-PP4AV%20Thresholds-orange.svg)](#)
 [![Companion Repo](https://img.shields.io/badge/Companion%20Repo-FAST--Edge--Anonymization-purple.svg)](https://github.com/awabyasin90-ops/FAST-Edge-Anonymization)
-[![License: Citation Required](https://img.shields.io/badge/License-Citation%20Required-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Official benchmarking suite, human oracle auditing interface, and automated statistical evaluation engine for empirical research investigating anonymization failure patterns, multi-scale distance collapse, and edge hardware trade-offs across real drives and autonomous driving simulation.
 
@@ -27,7 +27,7 @@ Visual anonymization in automated driving systems requires continuous privacy pr
 ```text
 3_Systems/
 ├── README.md                                  # Repository documentation & reproducibility guide
-├── LICENSE                                    # Academic Research License (Citation Required)
+├── LICENSE                                    # MIT License
 ├── CITATION.cff                               # Academic citation metadata
 ├── .gitignore                                 # Excludes raw images, heavy weights, and virtual envs
 ├── BENCHMARK_SPECIFICATION_TABLES.md          # Scientific benchmark specification protocols
@@ -199,4 +199,4 @@ If you use this benchmark suite, evaluation protocol, or dataset annotations in 
 **Contact:**
 - For technical questions, bug reports, or benchmark extensions, please open an issue in this repository.
 
-**License:** Distributed under the [Academic Research License](LICENSE) (Permissive with mandatory paper citation requirement).
+**License:** Distributed under the [MIT License](LICENSE).
