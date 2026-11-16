@@ -1,7 +1,7 @@
 # AnonBench: Empirical Benchmarking of Anonymization Failure Patterns in Autonomous Driving
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#)
-[![Paper Status: Under Review](https://img.shields.io/badge/Status-Preprint%20%2F%20Under%20Review-yellow.svg)](#)
+[![Status: Under Test](https://img.shields.io/badge/Status-Under%20Test-orange.svg)](#)
 [![Evaluation IoU >= 0.50](https://img.shields.io/badge/IoU%20Matching-%E2%89%A5%200.50-brightgreen.svg)](#)
 [![PP4AV Standard](https://img.shields.io/badge/Filtering-PP4AV%20Thresholds-orange.svg)](#)
 [![Companion Repo](https://img.shields.io/badge/Companion%20Repo-FAST--Edge--Anonymization-purple.svg)](https://github.com/awabyasin90-ops/FAST-Edge-Anonymization)
