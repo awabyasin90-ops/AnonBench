@@ -9,7 +9,7 @@
 [![PP4AV Standard](https://img.shields.io/badge/Filtering-PP4AV%20Thresholds-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **Official benchmark suite for evaluating visual anonymization failure patterns in autonomous driving across 5 pipelines, hardware telemetry, and a customized Human-in-the-Loop annotation engine X-AnyLabeling.**
+> **Official benchmark suite for evaluating visual anonymization failure patterns in autonomous driving (Real-World Drives & CARLA Simulation) ,across 5 pipelines, hardware telemetry, and a customized Human-in-the-Loop annotation engine X-AnyLabeling.**
 
 ---
 
